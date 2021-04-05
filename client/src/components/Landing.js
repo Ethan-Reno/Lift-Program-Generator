@@ -57,7 +57,7 @@ export default function Landing() {
               Lift Logic
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              A simple application to create one-rep maximumbased 
+              A simple application to create one-rep-maximum based 
               powerlifting programs.
             </Typography>
             <div className={classes.heroButtons}>
@@ -89,10 +89,10 @@ export default function Landing() {
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      Feature
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe the content.
+                      Description
                     </Typography>
                   </CardContent>
                 </Card>
