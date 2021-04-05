@@ -26,7 +26,7 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.liftButton} color="inherit" aria-label="menu">
+          <IconButton href="/" edge="start" className={classes.liftButton} color="inherit" aria-label="menu">
             <LiftIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
