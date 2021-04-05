@@ -11,10 +11,8 @@ import Landing from './components/Landing'
 function App() {
   return (
     <Router>
-      <div className="App">
           <ApplicationBar />
           <Landing />
-      </div>
     </Router>
   );
 }
