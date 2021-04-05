@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from 'react-router-dom';
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ApplicationBar from './components/AppBar';
 import Landing from './components/Landing';
 import SignIn from './components/SignIn';
@@ -27,6 +22,5 @@ const App = () => (
       </div>
     </Router>
 )
-
 
 export default App;
