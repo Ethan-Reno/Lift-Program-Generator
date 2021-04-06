@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import theme from './theme.js'
 import { ThemeProvider } from '@material-ui/core/styles';
+import { store } from './app/store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </ThemeProvider>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root')
 );

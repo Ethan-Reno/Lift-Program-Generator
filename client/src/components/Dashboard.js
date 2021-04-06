@@ -69,7 +69,7 @@ export default function Dashboard() {
                     <Typography gutterBottom variant="h5" component="h2">
                       Program title
                     </Typography>
-                    <Typography variant="p" component="p">
+                    <Typography variant="body1" component="p">
                       Description
                     </Typography>                    
                   <CardActions>
