@@ -69,7 +69,7 @@ export default function Dashboard() {
                     <Typography gutterBottom variant="h5" component="h2">
                       Program title
                     </Typography>
-                    <Typography variant="p" component="p">
+                    <Typography variant="body1" component="p">
                       Description
                     </Typography>                    
                   <CardActions>
@@ -87,7 +87,7 @@ export default function Dashboard() {
         </Container>
 
         <Container>
-          <Button variant="contained" color="primary">
+          <Button href='program/create' variant="contained" color="primary">
             Create New
           </Button>
         </Container>

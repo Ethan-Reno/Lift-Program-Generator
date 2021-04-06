@@ -30,10 +30,10 @@ export default function ButtonAppBar() {
             <LiftIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Lift Logic
+            Lift App
           </Typography>
-          <Button color="inherit">Login</Button>
-          <Button color="inherit">Sign Up</Button>
+          <Button color="inherit">Button One</Button>
+          <Button color="inherit">Button Two</Button>
         </Toolbar>
       </AppBar>
     </div>

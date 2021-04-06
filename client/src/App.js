@@ -5,20 +5,20 @@ import Landing from './components/Landing';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Dashboard from './components/Dashboard';
-import List from './components/List';
+import Counter from './features/Counter'
+import CreateProgram from './components/CreateProgram';
 
 const App = () => (
     <Router>
       <div>
         <ApplicationBar />
-
         <Switch>
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="/list" component={List} />
+          <Route path="/counter" component={Counter} />
+          <Route path="/program/create" component={CreateProgram} />
           <Route exact path="/" component={Landing} />
-
         </Switch>
       </div>
     </Router>
