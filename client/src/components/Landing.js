@@ -54,7 +54,7 @@ export default function Landing() {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Lift Logic
+              Lift App
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
               A simple application to create one-rep-maximum based 
@@ -68,7 +68,7 @@ export default function Landing() {
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button href="signin" variant="outlined" color="primary">
+                  <Button href="signin" variant="contained" color="link">
                     Login
                   </Button>
                 </Grid>

@@ -9,9 +9,9 @@ import {
   selectCount,
 } from './counterSlice';
 import styles from './Counter.module.css';
-
+ 
 export function Counter() {
-  const count = useSelector(selectCount);
+  const count = useSelector(selectCount); // This is the variable holding the state
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
