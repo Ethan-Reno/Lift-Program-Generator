@@ -21,7 +21,7 @@ const initialState = {
   // use Object.assign or object spread of objects
 function rootReducer(state = initialState, action) {
   if (action.type === ADD_ARTICLE) {
-    return Object.assign({}, state, {
+    return Object.assign( {}, state, {
       articles: state.articles.concat(action.payload)
     });
   }
