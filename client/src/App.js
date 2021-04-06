@@ -6,6 +6,7 @@ import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Dashboard from './components/Dashboard';
 import Counter from './features/Counter'
+import CreateProgram from './components/CreateProgram';
 
 const App = () => (
     <Router>
@@ -16,6 +17,7 @@ const App = () => (
           <Route path="/signup" component={SignUp} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/counter" component={Counter} />
+          <Route path="/program/create" component={CreateProgram} />
           <Route exact path="/" component={Landing} />
         </Switch>
       </div>

@@ -87,7 +87,7 @@ export default function Dashboard() {
         </Container>
 
         <Container>
-          <Button variant="contained" color="primary">
+          <Button href='program/create' variant="contained" color="primary">
             Create New
           </Button>
         </Container>
