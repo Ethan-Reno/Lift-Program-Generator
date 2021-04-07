@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -37,42 +37,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const lifts = [
-  {
-    name: "deadlift",
-    title: "Deadlift",
-    unit: "lbs",
-    default: 100
-  },
-  {
-    name: "squat",
-    title: "Squat",
-    unit: "lbs",
-    default: 100
-  },
-  {
-    name: "benchPress",
-    title: "Bench Press",
-    unit: "lbs",
-    default: 100
-  },
-  {
-    name: "overheadPress",
-    title: "Overhead Press",
-    unit: "lbs",
-    default: 100
-  },
-  {
-    name: "row",
-    title: "Row",
-    unit: "lbs",
-    default: 100
-  }
-];
-console.log(lifts);
+interface Lift {
+  name: string;
+  title: string;
+  unit: string;
+  default: string;
+};
 
 export default function CreateProgram() {
   const classes = useStyles();
+
+  const [checked, setChecked] = useState(false);
+  const handleClick = () => setChecked(!checked);
+
+  const lifts: Lift[] = [
+    {
+      name: "deadlift",
+      title: "Deadlift",
+      unit: "lbs",
+      default: "100"
+    },
+    {
+      name: "squat",
+      title: "Squat",
+      unit: "lbs",
+      default: "100"
+    },
+    {
+      name: "benchPress",
+      title: "Bench Press",
+      unit: "lbs",
+      default: "100"
+    },
+    {
+      name: "overheadPress",
+      title: "Overhead Press",
+      unit: "lbs",
+      default: "100"
+    },
+    {
+      name: "row",
+      title: "Row",
+      unit: "lbs",
+      default: "100"
+    }
+  ];
 
   return (
     <Container component="main" maxWidth="xs">
@@ -83,7 +92,6 @@ export default function CreateProgram() {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-
             <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
@@ -105,83 +113,42 @@ export default function CreateProgram() {
                 id="numberOfCycles"
                 label="Number of cycles"
                 name="numberOfCycles"
+                type="number"
               />
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel>Lifts: </FormLabel>
-                <FormGroup>
-                  <FormControlLabel 
-                    control={<Checkbox name="Bench Press" />}
-                    label="Bench Press"
-                  />
-                  <FormControlLabel 
-                    control={<Checkbox name="Bench Press" />}
-                    label="Overhead Press"
-                  />
-                  <FormControlLabel 
-                    control={<Checkbox name="Bench Press" />}
-                    label="Squat"
-                  />
-                  <FormControlLabel 
-                    control={<Checkbox name="Bench Press" />}
-                    label="Deadlift"
-                  />
-                  <FormControlLabel 
-                    control={<Checkbox name="Bench Press" />}
-                    label="Pendlay Row"
-                  />
-                </FormGroup>
-              </FormControl>
+              {lifts.map((lift: Lift) => (
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormGroup>
+                    <FormControlLabel
+                    control={
+                      <Checkbox
+                        name={lift.name}
+                        checked={checked} 
+                        onClick={handleClick}
+                      />
+                    }
+                    label={lift.title}
+                    />
+                  </FormGroup>
+                </FormControl>
+              ))}
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel>1RM: </FormLabel>
-                <FormGroup>
-                  {}
-                  <TextField
-                    id="standard-number"
-                    type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                  <TextField
-                    className={classes.oneRepMax}
-                    id="standard-number"
-                    type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                  <TextField
-                    className={classes.oneRepMax}
-                    id="standard-number"
-                    type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                  <TextField
-                    className={classes.oneRepMax}
-                    id="standard-number"
-                    type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                  <TextField
-                    className={classes.oneRepMax}
-                    id="standard-number"
-                    type="number"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </FormGroup>
-              </FormControl>
+              {lifts.map((lift: Lift) => (
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormGroup> 
+                    <TextField
+                        className={classes.oneRepMax}
+                        id="standard-number"
+                        type="number"
+                        placeholder="1RM (lbs)"
+                      />
+                  </FormGroup>
+                </FormControl>
+              ))}
             </Grid>
 
           </Grid>
