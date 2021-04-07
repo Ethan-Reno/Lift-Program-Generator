@@ -68,7 +68,7 @@ export default function Landing() {
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button href="signin" variant="contained" color="link">
+                  <Button href="signin" variant="contained">
                     Login
                   </Button>
                 </Grid>
@@ -76,6 +76,7 @@ export default function Landing() {
             </div>
           </Container>
         </div>
+
         <Container className={classes.cardGrid} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
@@ -100,6 +101,7 @@ export default function Landing() {
             ))}
           </Grid>
         </Container>
+        
       </main>
       {/* Footer */}
       {/* <footer className={classes.footer}>

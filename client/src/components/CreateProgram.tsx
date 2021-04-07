@@ -69,6 +69,7 @@ const lifts = [
     default: 100
   }
 ];
+console.log(lifts);
 
 export default function CreateProgram() {
   const classes = useStyles();
