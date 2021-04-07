@@ -9,5 +9,6 @@ export const store = configureStore({
     counter: counterReducer,
     //user: userReducer,
     //program: programReducer,
+    //liftSelection: liftReducer,
   },
 });
