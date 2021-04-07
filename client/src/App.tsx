@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import Dashboard from './components/Dashboard';
 import Counter from './features/Counter'
 import CreateProgram from './components/CreateProgram';
+import Program from './components/Program';
 
 const App = () => (
     <Router>
@@ -18,6 +19,7 @@ const App = () => (
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/counter" component={Counter} />
           <Route path="/program/create" component={CreateProgram} />
+          <Route path="/program" component={Program} />
           <Route exact path="/" component={Landing} />
         </Switch>
       </div>
