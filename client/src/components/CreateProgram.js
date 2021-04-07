@@ -37,6 +37,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const lifts = [
+  {
+    name: "deadlift",
+    title: "Deadlift",
+    unit: "lbs",
+    default: 100
+  },
+  {
+    name: "squat",
+    title: "Squat",
+    unit: "lbs",
+    default: 100
+  },
+  {
+    name: "benchPress",
+    title: "Bench Press",
+    unit: "lbs",
+    default: 100
+  },
+  {
+    name: "overheadPress",
+    title: "Overhead Press",
+    unit: "lbs",
+    default: 100
+  },
+  {
+    name: "row",
+    title: "Row",
+    unit: "lbs",
+    default: 100
+  }
+];
+
 export default function CreateProgram() {
   const classes = useStyles();
 
@@ -106,6 +139,7 @@ export default function CreateProgram() {
               <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel>1RM: </FormLabel>
                 <FormGroup>
+                  {}
                   <TextField
                     id="standard-number"
                     type="number"
