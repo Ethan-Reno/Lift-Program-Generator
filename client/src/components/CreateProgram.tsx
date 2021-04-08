@@ -6,11 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Input from "@material-ui/core/Input";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,9 +29,6 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
   },
   oneRepMax: {
     marginTop: theme.spacing(1),
@@ -89,7 +87,15 @@ const lifts: Lift[] = [
   }
 ];
 
-const initializeLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
+const initTextFormState = (): TextFormState => {
+  const state: TextFormState = {
+    title: null,
+    cycles: 0
+  }
+  return state;
+};
+
+const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
   const state: LiftsFormState = {};
   lifts.forEach((lift) => {
     state[lift.name] = {
@@ -100,19 +106,31 @@ const initializeLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
   return state;
 };
 
-const initTextFormState = (): TextFormState => {
-  const state: TextFormState = {
-    title: null,
-    cycles: 0
-  }
-  return state;
-};
-
 export default function CreateProgram() {
   const classes = useStyles();
 
-  const [liftsFormState, setLiftsFormState] = useState<LiftsFormState>(initializeLiftsFormState(lifts));
-  
+  const [textFormState, setTextFormState] = useState<TextFormState>(initTextFormState());
+
+  const [liftsFormState, setLiftsFormState] = useState<LiftsFormState>(initLiftsFormState(lifts));
+
+  const handleTitleChange = () => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newState = {
+      ...textFormState,
+      title: e.target.value
+    }
+    setTextFormState(newState);
+    console.log(newState);
+  }
+
+  const handleCyclesChange = () => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newState = {
+      ...textFormState,
+      cycles: e.target.valueAsNumber
+    }
+    setTextFormState(newState);
+    console.log(newState);
+  }
+
   const handleLiftCheckboxChange = (liftName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newState = {
       ...liftsFormState,
@@ -136,6 +154,15 @@ export default function CreateProgram() {
     setLiftsFormState(newState);
   }
 
+  const handleSubmit = () => {
+    const submitFormState = {
+      ...textFormState,
+      ...liftsFormState
+      }
+      console.log(submitFormState);
+      return submitFormState
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -147,12 +174,11 @@ export default function CreateProgram() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
                 name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="programName"
+                onChange={handleTitleChange()}
                 label="Program name"
                 autoFocus
               />
@@ -163,7 +189,7 @@ export default function CreateProgram() {
                 variant="outlined"
                 required
                 fullWidth
-                id="numberOfCycles"
+                onChange={handleCyclesChange()}
                 label="Number of cycles"
                 name="numberOfCycles"
                 type="number"
@@ -192,24 +218,24 @@ export default function CreateProgram() {
 
             <Grid item xs={12} sm={6}>
               {lifts.map((lift: Lift) => (
-                <FormControl component="fieldset" className={classes.formControl}>
-                  <FormGroup> 
-                    <TextField
+                <FormGroup> 
+                  <FormControl component="fieldset" className={classes.formControl} key={lift.name}>
+                    <Input
                         className={classes.oneRepMax}
                         onChange={handleLiftOneRepMaxChange(lift.name)}
                         value={liftsFormState[lift.name].oneRepMax}
                         type="number"
                         disabled={!liftsFormState[lift.name].checked}
+                        endAdornment={<InputAdornment position="end">lb</InputAdornment>}
                       />
-                  </FormGroup>
-                </FormControl>
+                  </FormControl>
+                </FormGroup>
               ))}
             </Grid>
 
           </Grid>
           <Button
-            href="dashboard"
-            type="submit"
+            onClick={() => handleSubmit()}
             fullWidth
             variant="contained"
             color="primary"
@@ -224,8 +250,6 @@ export default function CreateProgram() {
   );
 }
 
-
-
   // REVIEW
   // practice verbal understanding of syntax
   // TypeScript generics
@@ -233,9 +257,6 @@ export default function CreateProgram() {
 
 /* TODO:
 
-Fix the lift label changing color
-Disable 1RM inputs if lift is not selected
-Event handlers for storing everything in state
-Individual lift chekcbox comps
+Individual lift checkbox comps?
 
 */
