@@ -49,7 +49,12 @@ interface LiftsFormState {
     checked: boolean;
     oneRepMax: number;
   };
-}
+};
+
+interface TextFormState {
+  title: string;
+  cycles: number;
+};
 
 const lifts: Lift[] = [
   {
@@ -93,13 +98,19 @@ const initializeLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
     }
   })
   return state;
-}
+};
+
+const initTextFormState = (): TextFormState => {
+  const state: TextFormState = {
+    title: null,
+    cycles: 0
+  }
+  return state;
+};
 
 export default function CreateProgram() {
   const classes = useStyles();
 
-
-  //first param = the entirety of the useState param
   const [liftsFormState, setLiftsFormState] = useState<LiftsFormState>(initializeLiftsFormState(lifts));
   
   const handleLiftCheckboxChange = (liftName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,7 +123,6 @@ export default function CreateProgram() {
       }
     }
     setLiftsFormState(newState);
-    console.log(newState);
   }
 
   const handleLiftOneRepMaxChange = (liftName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,7 +134,6 @@ export default function CreateProgram() {
       }
     }
     setLiftsFormState(newState);
-    console.log(newState);
   }
 
   return (
