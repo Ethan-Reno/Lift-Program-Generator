@@ -39,49 +39,93 @@ const useStyles = makeStyles((theme) => ({
 
 interface Lift {
   name: string;
-  title: string;
+  label: string;
   unit: string;
   default: string;
 };
 
+interface LiftsFormState {
+  [liftName: string]: {
+    checked: boolean;
+    oneRepMax: number;
+  };
+}
+
+const lifts: Lift[] = [
+  {
+    name: "squat",
+    label: "Squat",
+    unit: "lbs",
+    default: "100",
+  },
+  {
+    name: "benchPress",
+    label: "Bench Press",
+    unit: "lbs",
+    default: "100",
+  },
+  {
+    name: "deadlift",
+    label: "Deadlift",
+    unit: "lbs",
+    default: "100",
+  },
+  {
+    name: "overheadPress",
+    label: "Overhead Press",
+    unit: "lbs",
+    default: "100",
+  },
+  {
+    name: "pendlayrow",
+    label: "Pendlay Row",
+    unit: "lbs",
+    default: "100",
+  }
+];
+
+const initializeLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
+  const state: LiftsFormState = {};
+  lifts.forEach((lift) => {
+    state[lift.name] = {
+      checked: false,
+      oneRepMax: 0
+    }
+  })
+  return state;
+}
+
 export default function CreateProgram() {
   const classes = useStyles();
 
-  const [checked, setChecked] = useState(false);
-  const handleClick = () => setChecked(!checked);
 
-  const lifts: Lift[] = [
-    {
-      name: "deadlift",
-      title: "Deadlift",
-      unit: "lbs",
-      default: "100"
-    },
-    {
-      name: "squat",
-      title: "Squat",
-      unit: "lbs",
-      default: "100"
-    },
-    {
-      name: "benchPress",
-      title: "Bench Press",
-      unit: "lbs",
-      default: "100"
-    },
-    {
-      name: "overheadPress",
-      title: "Overhead Press",
-      unit: "lbs",
-      default: "100"
-    },
-    {
-      name: "row",
-      title: "Row",
-      unit: "lbs",
-      default: "100"
+  //first param = the entirety of the useState param
+  const [liftsFormState, setLiftsFormState] = useState<LiftsFormState>(initializeLiftsFormState(lifts));
+  
+  const handleLiftCheckboxChange = (liftName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newState = {
+      ...liftsFormState,
+      [liftName]: {
+        ...liftsFormState[liftName],
+        checked: e.target.checked,
+        oneRepMax: e.target.checked ? liftsFormState[liftName].oneRepMax : 0
+      }
     }
-  ];
+    setLiftsFormState(newState);
+    console.log(newState);
+  }
+
+  const handleLiftOneRepMaxChange = (liftName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newState: LiftsFormState = {
+      ...liftsFormState,
+      [liftName]: {
+        ...liftsFormState[liftName],
+        oneRepMax: e.target.valueAsNumber
+      }
+    }
+    setLiftsFormState(newState);
+    console.log(newState);
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -119,20 +163,21 @@ export default function CreateProgram() {
 
             <Grid item xs={12} sm={6}>
               {lifts.map((lift: Lift) => (
-                <FormControl component="fieldset" className={classes.formControl}>
-                  <FormGroup>
+              
+                <FormGroup>
+                  <FormControl component="fieldset" className={classes.formControl} key={lift.name}>
                     <FormControlLabel
                     control={
                       <Checkbox
-                        name={lift.name}
-                        checked={checked} 
-                        onClick={handleClick}
+                        onChange={handleLiftCheckboxChange(lift.name)}
+                        checked={liftsFormState[lift.name].checked}
                       />
                     }
-                    label={lift.title}
+                    label={lift.label}
                     />
-                  </FormGroup>
-                </FormControl>
+                  </FormControl>
+                </FormGroup>
+                
               ))}
             </Grid>
 
@@ -142,9 +187,10 @@ export default function CreateProgram() {
                   <FormGroup> 
                     <TextField
                         className={classes.oneRepMax}
-                        id="standard-number"
+                        onChange={handleLiftOneRepMaxChange(lift.name)}
+                        value={liftsFormState[lift.name].oneRepMax}
                         type="number"
-                        placeholder="1RM (lbs)"
+                        disabled={!liftsFormState[lift.name].checked}
                       />
                   </FormGroup>
                 </FormControl>
@@ -170,10 +216,17 @@ export default function CreateProgram() {
 }
 
 
+
+  // REVIEW
+  // practice verbal understanding of syntax
+  // TypeScript generics
+  // square brackets vs dot notation for objects
+
 /* TODO:
 
 Fix the lift label changing color
 Disable 1RM inputs if lift is not selected
 Event handlers for storing everything in state
+Individual lift chekcbox comps
 
 */
