@@ -12,6 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Input from "@material-ui/core/Input";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,10 +50,11 @@ interface LiftsFormState {
   };
 };
 
-interface TextFormState {
+export interface ProgramInputs {
   title: string;
   cycles: number;
-};
+  lifts: LiftsFormState;
+}
 
 const lifts: Lift[] = [
   {
@@ -87,14 +89,6 @@ const lifts: Lift[] = [
   }
 ];
 
-const initTextFormState = (): TextFormState => {
-  const state: TextFormState = {
-    title: null,
-    cycles: 0
-  }
-  return state;
-};
-
 const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
   const state: LiftsFormState = {};
   lifts.forEach((lift) => {
@@ -109,30 +103,14 @@ const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
 export default function CreateProgram() {
   const classes = useStyles();
 
-  const [textFormState, setTextFormState] = useState<TextFormState>(initTextFormState());
+  const [title, setTitle] = useState('');
+
+  const [cycles, setCycles] = useState(0);
 
   const [liftsFormState, setLiftsFormState] = useState<LiftsFormState>(initLiftsFormState(lifts));
 
-  const handleTitleChange = () => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newState = {
-      ...textFormState,
-      title: e.target.value
-    }
-    setTextFormState(newState);
-    console.log(newState);
-  }
-
-  const handleCyclesChange = () => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newState = {
-      ...textFormState,
-      cycles: e.target.valueAsNumber
-    }
-    setTextFormState(newState);
-    console.log(newState);
-  }
-
   const handleLiftCheckboxChange = (liftName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newState = {
+    const newState: LiftsFormState = {
       ...liftsFormState,
       [liftName]: {
         ...liftsFormState[liftName],
@@ -155,12 +133,13 @@ export default function CreateProgram() {
   }
 
   const handleSubmit = () => {
-    const submitFormState = {
-      ...textFormState,
-      ...liftsFormState
-      }
-      console.log(submitFormState);
-      return submitFormState
+    const ProgramInputs: ProgramInputs = {
+      title: title,
+      cycles: cycles,
+      lifts: {...liftsFormState}
+    }
+      console.log(ProgramInputs);
+      return ProgramInputs
   }
 
   return (
@@ -178,7 +157,7 @@ export default function CreateProgram() {
                 variant="outlined"
                 required
                 fullWidth
-                onChange={handleTitleChange()}
+                onChange={e => setTitle(e.target.value)}
                 label="Program name"
                 autoFocus
               />
@@ -189,7 +168,7 @@ export default function CreateProgram() {
                 variant="outlined"
                 required
                 fullWidth
-                onChange={handleCyclesChange()}
+                onChange={e => setCycles(parseInt(e.target.value))}
                 label="Number of cycles"
                 name="numberOfCycles"
                 type="number"
@@ -199,8 +178,8 @@ export default function CreateProgram() {
             <Grid item xs={12} sm={6}>
               {lifts.map((lift: Lift) => (
               
-                <FormGroup>
-                  <FormControl component="fieldset" className={classes.formControl} key={lift.name}>
+                <FormGroup key={lift.name}>
+                  <FormControl component="fieldset" className={classes.formControl}>
                     <FormControlLabel
                     control={
                       <Checkbox
@@ -218,8 +197,8 @@ export default function CreateProgram() {
 
             <Grid item xs={12} sm={6}>
               {lifts.map((lift: Lift) => (
-                <FormGroup> 
-                  <FormControl component="fieldset" className={classes.formControl} key={lift.name}>
+                <FormGroup key={lift.name}> 
+                  <FormControl component="fieldset" className={classes.formControl}>
                     <Input
                         className={classes.oneRepMax}
                         onChange={handleLiftOneRepMaxChange(lift.name)}
@@ -234,15 +213,26 @@ export default function CreateProgram() {
             </Grid>
 
           </Grid>
-          <Button
-            onClick={() => handleSubmit()}
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Create
-          </Button>
+          <Grid item xs={12}>
+            <ButtonGroup fullWidth>
+              <Button
+                onClick={() => handleSubmit()}
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Create
+              </Button>
+
+              <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.submit}
+              >
+                Cancel
+              </Button>
+            </ButtonGroup>
+          </Grid>
 
         </form>
       </div>

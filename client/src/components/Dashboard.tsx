@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const programs = [1, 2, 3, 4]; //will contain the array of programs assigned to a user
+const programs = ['test', 'test2']; //will contain the array of programs assigned to a user
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -75,7 +75,6 @@ export default function Dashboard() {
                   <CardActions>
                     <ButtonGroup>
                       <Button size="small">View</Button>
-                      <Button size="small">Edit</Button>
                       <Button size="small">Delete</Button>
                     </ButtonGroup>
                   </CardActions>
