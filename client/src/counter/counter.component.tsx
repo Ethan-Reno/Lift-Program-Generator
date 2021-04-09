@@ -7,11 +7,11 @@ import {
   incrementAsync,
   incrementIfOdd,
   selectCount,
-} from './counterSlice';
+} from './counter.slice';
 import styles from './Counter.module.css';
 import logo from '../logo.svg';
 import '../App.css';
- 
+
 export default function Counter() {
   const count = useSelector(selectCount); // This is the variable holding the state
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 // configureStore API
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counterSlice';
+import counterReducer from '../counter/counter.slice';
 
 // Create redux store
   // automatically configures redux devtools extension
@@ -12,3 +12,5 @@ export const store = configureStore({
     //liftSelection: liftReducer,
   },
 });
+
+//change directory to store?

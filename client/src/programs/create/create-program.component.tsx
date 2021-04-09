@@ -14,6 +14,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Input from "@material-ui/core/Input";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
+// exports createProgram component
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -50,7 +52,7 @@ interface LiftsFormState {
   };
 };
 
-export interface ProgramInputs {
+interface ProgramInputs {
   title: string;
   cycles: number;
   lifts: LiftsFormState;
@@ -175,42 +177,40 @@ export default function CreateProgram() {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              {lifts.map((lift: Lift) => (
-              
-                <FormGroup key={lift.name}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormControlLabel
-                    control={
-                      <Checkbox
-                        onChange={handleLiftCheckboxChange(lift.name)}
-                        checked={liftsFormState[lift.name].checked}
+            {lifts.map((lift: Lift) => (
+              <React.Fragment key={lift.name}>
+                <Grid item xs={12} sm={6}>
+                  <FormGroup>
+                    <FormControl component="fieldset" className={classes.formControl}>
+                      <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handleLiftCheckboxChange(lift.name)}
+                          checked={liftsFormState[lift.name].checked}
+                        />
+                      }
+                      label={lift.label}
                       />
-                    }
-                    label={lift.label}
-                    />
-                  </FormControl>
-                </FormGroup>
-                
-              ))}
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              {lifts.map((lift: Lift) => (
-                <FormGroup key={lift.name}> 
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <Input
-                        className={classes.oneRepMax}
-                        onChange={handleLiftOneRepMaxChange(lift.name)}
-                        value={liftsFormState[lift.name].oneRepMax}
-                        type="number"
-                        disabled={!liftsFormState[lift.name].checked}
-                        endAdornment={<InputAdornment position="end">lb</InputAdornment>}
-                      />
-                  </FormControl>
-                </FormGroup>
-              ))}
-            </Grid>
+                    </FormControl>
+                  </FormGroup>
+                </Grid>
+                  
+                <Grid item xs={12} sm={6}>
+                  <FormGroup> 
+                    <FormControl component="fieldset" className={classes.formControl}>
+                      <Input
+                          className={classes.oneRepMax}
+                          onChange={handleLiftOneRepMaxChange(lift.name)}
+                          value={liftsFormState[lift.name].oneRepMax}
+                          type="number"
+                          disabled={!liftsFormState[lift.name].checked}
+                          endAdornment={<InputAdornment position="end">lb</InputAdornment>}
+                        />
+                    </FormControl>
+                  </FormGroup>
+                </Grid>
+              </React.Fragment>
+            ))}
 
           </Grid>
           <Grid item xs={12}>

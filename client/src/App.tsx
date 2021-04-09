@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import ApplicationBar from './components/AppBar';
-import Landing from './components/Landing';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
-import Dashboard from './components/Dashboard';
-import Counter from './features/Counter'
-import CreateProgram from './components/CreateProgram';
-import Program from './components/Program';
+import ApplicationBar from './components/app-bar.component';
+import Landing from './components/landing.component';
+import SignIn from './auth/sign-in.component';
+import SignUp from './auth/sign-up.component';
+import Dashboard from './dashboard/dashboard.component';
+import Counter from './counter/counter.component'
+import CreateProgram from './programs/create/create-program.component';
+import Program from './programs/display/program.component';
 
 const App = () => (
     <Router>
