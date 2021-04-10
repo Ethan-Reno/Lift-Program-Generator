@@ -14,7 +14,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Input from "@material-ui/core/Input";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { Lift, LiftsFormState, ProgramInputs } from "../program.types";
-import { lifts } from '../program.lifts';;
+import { lifts } from '../program.lifts';
+import { addProgram } from '../programs.slice';
+import { useDispatch } from 'react-redux';
 
 // exports createProgram component
 
@@ -65,12 +67,10 @@ const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
 
 export default function CreateProgram() {
   const classes = useStyles();
-
   const [title, setTitle] = useState('');
-
   const [cycles, setCycles] = useState(0);
-
   const [liftsFormState, setLiftsFormState] = useState<LiftsFormState>(initLiftsFormState(lifts));
+  const dispatch = useDispatch();
 
   const handleLiftCheckboxChange = (liftName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newState: LiftsFormState = {
@@ -95,14 +95,24 @@ export default function CreateProgram() {
     setLiftsFormState(newState);
   }
 
-  const handleSubmit = () => {
-    const ProgramInputs: ProgramInputs = {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const programInputs: ProgramInputs = {
       title: title,
       cycles: cycles,
       lifts: {...liftsFormState}
     }
-      console.log(ProgramInputs);
-      return ProgramInputs
+    /*try {
+        const res = await fetch('http://localhost:5000/programs', {
+          method: 'POST',
+          body: programInputs,
+          headers: {'Content-Type': 'application/json' },
+        })
+        const data = await res.json()
+      } */
+      console.log(programInputs);
+      dispatch(addProgram(programInputs))
   }
 
   return (
@@ -112,7 +122,7 @@ export default function CreateProgram() {
         <Typography component="h1" variant="h5">
           Create Program
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -177,7 +187,7 @@ export default function CreateProgram() {
           <Grid item xs={12}>
             <ButtonGroup fullWidth>
               <Button
-                onClick={() => handleSubmit()}
+                type="submit"
                 variant="contained"
                 color="primary"
                 className={classes.submit}
@@ -186,9 +196,10 @@ export default function CreateProgram() {
               </Button>
 
               <Button
-              variant="outlined"
-              color="secondary"
-              className={classes.submit}
+
+                variant="outlined"
+                color="secondary"
+                className={classes.submit}
               >
                 Cancel
               </Button>

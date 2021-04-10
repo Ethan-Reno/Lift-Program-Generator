@@ -1,22 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// { programs: [...] }
+// { contacts: { programs: [...] } }
 // state itself will be a programs array
 
 const programSlice = createSlice({
   name: "programs",
-  initialState: null,
+  initialState: {
+    programs: []
+  },
   reducers: {
     setPrograms: (state, action ) => {
-      state = action.payload
+      state.programs = action.payload
+    },
+    addProgram: (state, action ) => {
+      state.programs.push(action.payload)
     },
     deleteProgram: (state, action ) => {
-     state = state.filter(program => program.id !== action.payload)
+     state.programs = state.programs.filter((program) => program.id !== action.payload)
     },
   },
 })
 
 // Action creates are generated for each case reducer function
-export const { setPrograms, deleteProgram } = programSlice.actions;
+export const { setPrograms, addProgram, deleteProgram } = programSlice.actions;
 
 export default programSlice.reducer;
