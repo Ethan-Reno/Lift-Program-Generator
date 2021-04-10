@@ -13,6 +13,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Input from "@material-ui/core/Input";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { Lift, LiftsFormState, ProgramInputs } from "../program.types";
+import { lifts } from '../program.lifts';;
 
 // exports createProgram component
 
@@ -38,61 +40,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Lift {
-  name: string;
-  label: string;
-  unit: string;
-  default: string;
-};
-
-interface LiftsFormState {
-  [liftName: string]: {
-    checked: boolean;
-    oneRepMax: number;
-  };
-};
-
-interface ProgramInputs {
-  title: string;
-  cycles: number;
-  lifts: LiftsFormState;
-}
-
-const lifts: Lift[] = [
-  {
-    name: "squat",
-    label: "Squat",
-    unit: "lbs",
-    default: "100",
-  },
-  {
-    name: "benchPress",
-    label: "Bench Press",
-    unit: "lbs",
-    default: "100",
-  },
-  {
-    name: "deadlift",
-    label: "Deadlift",
-    unit: "lbs",
-    default: "100",
-  },
-  {
-    name: "overheadPress",
-    label: "Overhead Press",
-    unit: "lbs",
-    default: "100",
-  },
-  {
-    name: "pendlayrow",
-    label: "Pendlay Row",
-    unit: "lbs",
-    default: "100",
-  }
-];
-
+// Initialize object to hold the state of lifts in the form
 const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
   const state: LiftsFormState = {};
+  
+  // loop through each lift in the lift array
   lifts.forEach((lift) => {
     state[lift.name] = {
       checked: false,
@@ -100,6 +52,15 @@ const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
     }
   })
   return state;
+  /* expected output is an object of objects
+    {
+      deadlift: {
+        checked: false,
+        oneRepMax: 0
+      },
+      {...}
+    }
+  */
 };
 
 export default function CreateProgram() {
@@ -239,14 +200,3 @@ export default function CreateProgram() {
     </Container>
   );
 }
-
-  // REVIEW
-  // practice verbal understanding of syntax
-  // TypeScript generics
-  // square brackets vs dot notation for objects
-
-/* TODO:
-
-Individual lift checkbox comps?
-
-*/
