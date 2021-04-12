@@ -10,8 +10,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { setPrograms } from '../programs/programs.slice';
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
   const programs = useSelector((state: any) => state.programs.programs)
 
@@ -55,6 +57,10 @@ export default function Dashboard() {
   }
 
   useEffect(() => getPrograms(), [])
+
+  const handleSubmit = () => {
+    history.push({ pathname: "/create"} )
+  }
 
   return (
     <React.Fragment>
@@ -76,10 +82,10 @@ export default function Dashboard() {
                 <Card className={classes.card}>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Program title
+                      {program.title}
                     </Typography>
                     <Typography variant="body1" component="p">
-                      Description
+                      Cycles: {program.cycles}
                     </Typography>                    
                   <CardActions>
                     <ButtonGroup>
@@ -95,7 +101,11 @@ export default function Dashboard() {
         </Container>
 
         <Container>
-          <Button href='program/create' variant="contained" color="primary">
+          <Button 
+            variant="contained" 
+            color="primary"
+            onClick={handleSubmit}
+          >
             Create New
           </Button>
         </Container>

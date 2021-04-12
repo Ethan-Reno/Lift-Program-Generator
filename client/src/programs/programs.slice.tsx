@@ -9,13 +9,13 @@ const programSlice = createSlice({
     programs: []
   },
   reducers: {
-    setPrograms: (state, action ) => {
+    setPrograms: ( state, action ) => {
       state.programs = action.payload
     },
-    addProgram: (state, action ) => {
+    addProgram: ( state, action ) => {
       state.programs.push(action.payload)
     },
-    deleteProgram: (state, action ) => {
+    deleteProgram: ( state, action ) => {
      state.programs = state.programs.filter((program) => program.id !== action.payload)
     },
   },
