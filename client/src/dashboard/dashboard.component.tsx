@@ -13,6 +13,7 @@ import { setPrograms } from '../programs/programs.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -58,8 +59,8 @@ export default function Dashboard() {
 
   useEffect(() => getPrograms(), [])
 
-  const handleSubmit = () => {
-    history.push({ pathname: "/create"} )
+  const handleRedirect = (path: string) => {
+    history.push({ pathname: path} )
   }
 
   return (
@@ -89,7 +90,12 @@ export default function Dashboard() {
                     </Typography>                    
                   <CardActions>
                     <ButtonGroup>
-                      <Button size="small">View</Button>
+                      <Button 
+                        size="small"
+                        onClick={() => {handleRedirect(`/programs/${program.title}`)}}
+                      >
+                        View
+                      </Button>
                       <Button size="small">Delete</Button>
                     </ButtonGroup>
                   </CardActions>
@@ -104,7 +110,7 @@ export default function Dashboard() {
           <Button 
             variant="contained" 
             color="primary"
-            onClick={handleSubmit}
+            onClick={() => {handleRedirect("/create")}}
           >
             Create New
           </Button>
