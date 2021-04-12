@@ -17,6 +17,7 @@ import { Lift, LiftsFormState, ProgramInputs } from "../program.types";
 import { lifts } from '../program.lifts';
 import { addProgram } from '../programs.slice';
 import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router";
 
 // exports createProgram component
 
@@ -67,6 +68,7 @@ const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
 
 export default function CreateProgram() {
   const classes = useStyles();
+  const history = useHistory();
   const [title, setTitle] = useState('');
   const [cycles, setCycles] = useState(0);
   const [liftsFormState, setLiftsFormState] = useState<LiftsFormState>(initLiftsFormState(lifts));
@@ -111,8 +113,9 @@ export default function CreateProgram() {
         })
         const data = await res.json()
       } */
-      console.log(programInputs);
-      dispatch(addProgram(programInputs))
+    console.log(programInputs);
+    dispatch(addProgram(programInputs))
+    history.push({pathname: "/dashboard"})
   }
 
   return (
@@ -196,7 +199,6 @@ export default function CreateProgram() {
               </Button>
 
               <Button
-
                 variant="outlined"
                 color="secondary"
                 className={classes.submit}

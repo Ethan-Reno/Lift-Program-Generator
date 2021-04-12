@@ -9,6 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { setPrograms } from '../programs/programs.slice';
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -40,12 +43,18 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
-}));
-
-const programs = ['test', 'test2']; //will contain the array of programs assigned to a user
+})); 
 
 export default function Dashboard() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const programs = useSelector((state: any) => state.programs.programs)
+
+  const getPrograms = (): any => {
+    return dispatch(setPrograms(programs))
+  }
+
+  useEffect(() => getPrograms(), [])
 
   return (
     <React.Fragment>
