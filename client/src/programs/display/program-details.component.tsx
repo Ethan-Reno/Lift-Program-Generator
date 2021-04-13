@@ -30,7 +30,6 @@ function createData(name, weight, reps) {
   return { name, weight, reps };
 }
 
-
 const rows = [
   createData('Squat', 100, 5),
   createData('Bench Press', 100, 5),
@@ -53,7 +52,20 @@ export default function Program(props) {
       currentProgram = program;
     }
   })
+  
+  const lifts = currentProgram.lifts;
+  console.log(lifts);
+  const rows1 = [
+    Object.keys(lifts).forEach((lift) => {
+      console.log(lifts[lift].checked)
+      if (lifts[lift].checked === true) {
+        createData(lift, lifts[lift].oneRepMax, 5) 
+      }
+    })
+  ];
 
+  console.log(rows1)
+ 
   return (
 <React.Fragment>
       <CssBaseline />

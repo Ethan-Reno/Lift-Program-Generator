@@ -115,7 +115,6 @@ export default function CreateProgram() {
         })
         const data = await res.json()
       } */
-    console.log(programInputs);
     dispatch(addProgram(programInputs))
     history.push({pathname: "/dashboard"})
   }
