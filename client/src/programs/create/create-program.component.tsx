@@ -18,8 +18,8 @@ import { lifts } from '../program.lifts';
 import { addProgram } from '../programs.slice';
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router";
+import { v4 as uuidv4 } from 'uuid';
 
-// exports createProgram component
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,7 +49,7 @@ const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
   
   // loop through each lift in the lift array
   lifts.forEach((lift) => {
-    state[lift.name] = {
+    state[lift.name] = { 
       checked: false,
       oneRepMax: 0
     }
@@ -99,8 +99,10 @@ export default function CreateProgram() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const uuid = uuidv4();
 
     const programInputs: ProgramInputs = {
+      uuid: uuid,
       title: title,
       cycles: cycles,
       lifts: {...liftsFormState}

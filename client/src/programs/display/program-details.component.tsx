@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
+import { useSelector } from 'react-redux';
+import { ProgramInputs } from "../program.types";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -28,6 +30,7 @@ function createData(name, weight, reps) {
   return { name, weight, reps };
 }
 
+
 const rows = [
   createData('Squat', 100, 5),
   createData('Bench Press', 100, 5),
@@ -36,8 +39,20 @@ const rows = [
   createData('Pendlay Row', 100, 5),
 ];
 
-export default function Program() {
+export default function Program(props) {
+
   const classes = useStyles();
+  // const history = useHistory();
+  const programs = useSelector((state: any) => state.programs.programs)
+  
+  // set currentProgram to the program with a uuid matching the url uuid parameter
+  let currentProgram;
+  const id = props.match.params.id
+  programs.forEach((program: ProgramInputs) => {
+    if (":" + program.uuid === id) {
+      currentProgram = program;
+    }
+  })
 
   return (
 <React.Fragment>
@@ -47,7 +62,7 @@ export default function Program() {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
-              Program Title
+              {currentProgram.title}
             </Typography>
           </Container>
         </div>

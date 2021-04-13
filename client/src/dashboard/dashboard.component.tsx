@@ -13,7 +13,6 @@ import { setPrograms } from '../programs/programs.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -92,7 +91,7 @@ export default function Dashboard() {
                     <ButtonGroup>
                       <Button 
                         size="small"
-                        onClick={() => {handleRedirect(`/programs/${program.title}`)}}
+                        onClick={() => {handleRedirect(`/programs/:${program.uuid}`)}}
                       >
                         View
                       </Button>
