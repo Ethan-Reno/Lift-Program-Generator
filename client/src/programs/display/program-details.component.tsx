@@ -26,17 +26,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function createData(name, weight, reps) {
-  return { name, weight, reps };
-}
+// function createData(name, weight, reps) {
+//   return { name, weight, reps };
+// }
 
-const rows = [
-  createData('Squat', 100, 5),
-  createData('Bench Press', 100, 5),
-  createData('Deadlift', 100, 5),
-  createData('Overhead Press', 100, 5),
-  createData('Pendlay Row', 100, 5),
-];
+// const rows = [
+//   createData('Squat', 100, 5),
+//   createData('Bench Press', 100, 5),
+//   createData('Deadlift', 100, 5),
+//   createData('Overhead Press', 100, 5),
+//   createData('Pendlay Row', 100, 5),
+// ];
 
 export default function Program(props) {
 
@@ -54,17 +54,19 @@ export default function Program(props) {
   })
   
   const lifts = currentProgram.lifts;
-  console.log(lifts);
-  const rows1 = [
-    Object.keys(lifts).forEach((lift) => {
-      console.log(lifts[lift].checked)
-      if (lifts[lift].checked === true) {
-        createData(lift, lifts[lift].oneRepMax, 5) 
-      }
-    })
-  ];
-
-  console.log(rows1)
+  let activeLifts = [];
+  Object.keys(lifts).forEach((lift) => {
+    if (lifts[lift].checked === true) {
+      activeLifts = [
+        ...activeLifts,
+        {
+        name: lift,
+        weight: lifts[lift].oneRepMax,
+        }
+      ]
+      console.log(activeLifts);
+    }
+  })
  
   return (
 <React.Fragment>
@@ -82,6 +84,7 @@ export default function Program(props) {
         <Container className={classes.cardGrid} maxWidth="md">
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
+
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
@@ -89,17 +92,19 @@ export default function Program(props) {
                   <TableCell align="justify">Reps</TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.name}>
+                {activeLifts.map((lift) => (
+                  <TableRow key={lift.name}>
                     <TableCell component="th" scope="row">
-                      {row.name}
+                      {lift.name}
                     </TableCell>
-                    <TableCell align="justify">{row.weight}</TableCell>
-                    <TableCell align="justify">{row.reps}</TableCell>
+                    <TableCell align="justify">{lift.weight}</TableCell>
+                    <TableCell align="justify">5</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
+
             </Table>
           </TableContainer>
         </Container>
