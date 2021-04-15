@@ -2,31 +2,31 @@ import { Lift } from './program.types';
 
 export const lifts: Lift[] = [
   {
-    name: "squat",
+    name: "Squat",
     label: "Squat",
     unit: "lbs",
     default: "100",
   },
   {
-    name: "benchPress",
+    name: "Bench Press",
     label: "Bench Press",
     unit: "lbs",
     default: "100",
   },
   {
-    name: "deadlift",
+    name: "Deadlift",
     label: "Deadlift",
     unit: "lbs",
     default: "100",
   },
   {
-    name: "overheadPress",
+    name: "Overhead Press",
     label: "Overhead Press",
     unit: "lbs",
     default: "100",
   },
   {
-    name: "pendlayrow",
+    name: "Pendlay Row",
     label: "Pendlay Row",
     unit: "lbs",
     default: "100",

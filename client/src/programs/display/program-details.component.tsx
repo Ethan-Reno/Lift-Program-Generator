@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 // ];
 
 export default function Program(props) {
-
+  
   const classes = useStyles();
   // const history = useHistory();
   const programs = useSelector((state: any) => state.programs.programs)
@@ -55,6 +55,7 @@ export default function Program(props) {
   
   const lifts = currentProgram.lifts;
   let activeLifts = [];
+  
   Object.keys(lifts).forEach((lift) => {
     if (lifts[lift].checked === true) {
       activeLifts = [
@@ -67,9 +68,9 @@ export default function Program(props) {
       console.log(activeLifts);
     }
   })
- 
+
   return (
-<React.Fragment>
+    <React.Fragment>
       <CssBaseline />
       <main>
 
@@ -113,4 +114,3 @@ export default function Program(props) {
     </React.Fragment>
   );
 }
-
