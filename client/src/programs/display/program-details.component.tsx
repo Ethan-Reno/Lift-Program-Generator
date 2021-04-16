@@ -66,10 +66,6 @@ export default function Program(props) {
 
 */
 
-const setWeight = (oneRepMax, roundIncrement, ) => {
-
-};
-
   return (
     <React.Fragment>
       <CssBaseline />
