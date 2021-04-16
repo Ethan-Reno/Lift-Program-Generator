@@ -14,7 +14,8 @@ export interface LiftsFormState {
 
 export interface ProgramInputs {
   uuid: string,
-  title: string;
-  cycles: number;
-  lifts: LiftsFormState;
+  title: string,
+  cycles: number,
+  lifts: LiftsFormState,
+  smallestInc: number,
 }

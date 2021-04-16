@@ -51,13 +51,24 @@ export default function Program(props) {
         ...activeLifts,
         {
           name: lift,
-          weight: lifts[lift].oneRepMax,
+          oneRepMax: lifts[lift].oneRepMax,
         }
       ]
     }
   })
 
-  console.log(sessions);
+/* Helper function for calculating lift value in table rows:
+  
+  multiply weight property by session.setValues.#
+  add 5 (upper) or 10 (lower) for each cycle after 1st - values passed by form state for future custom control?
+  current cycle determined by pagination - re-render, not a new view
+  round to nearest increment passed by form state (typically 2.5, 5 or 10)
+
+*/
+
+const setWeight = (oneRepMax, roundIncrement, ) => {
+
+};
 
   return (
     <React.Fragment>
@@ -86,32 +97,32 @@ export default function Program(props) {
                           <TableCell align="justify">Reps</TableCell>
                         </TableRow>
                       </TableHead>
+
                       <TableBody>
                           <TableRow>
-                            <TableCell align="justify">{lift.weight * session.setValues.one}</TableCell>
+                            <TableCell align="justify">{lift.oneRepMax * session.setValues.one}</TableCell>
                             <TableCell align="justify">{session.repValues.one}</TableCell>
                           </TableRow>
                           <TableRow>
-                          <TableCell align="justify">{lift.weight * session.setValues.two}</TableCell>
+                            <TableCell align="justify">{lift.oneRepMax * session.setValues.two}</TableCell>
                             <TableCell align="justify">{session.repValues.two}</TableCell>
                           </TableRow>
                           <TableRow>
-                          <TableCell align="justify">{lift.weight * session.setValues.three}</TableCell>
+                            <TableCell align="justify">{lift.oneRepMax * session.setValues.three}</TableCell>
                             <TableCell align="justify">{session.repValues.three}</TableCell>
                           </TableRow>
                           <TableRow>
-                          <TableCell align="justify">{lift.weight * session.setValues.four}</TableCell>
+                            <TableCell align="justify">{lift.oneRepMax * session.setValues.four}</TableCell>
                             <TableCell align="justify">{session.repValues.four}</TableCell>
                           </TableRow>
                           <TableRow>
-                          <TableCell align="justify">{lift.weight * session.setValues.five}</TableCell>
+                            <TableCell align="justify">{lift.oneRepMax * session.setValues.five}</TableCell>
                             <TableCell align="justify">{session.repValues.five}</TableCell>
                           </TableRow>
                           <TableRow>
-                          <TableCell align="justify">{lift.weight * session.setValues.six}</TableCell>
+                            <TableCell align="justify">{lift.oneRepMax * session.setValues.six}</TableCell>
                             <TableCell align="justify">{session.repValues.six}</TableCell>
                           </TableRow>
-
                       </TableBody>
 
                     </Table>
