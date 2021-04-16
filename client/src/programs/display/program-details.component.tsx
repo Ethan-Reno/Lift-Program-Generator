@@ -6,37 +6,27 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import { useSelector } from 'react-redux';
 import { ProgramInputs } from "../program.types";
+import { sessions } from '../program.lifts';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
     padding: theme.spacing(4, 0, 0),
   },
   cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
   table: {
-    minWidth: 650,
+    minWidth: 100,
   },
 }));
-
-// function createData(name, weight, reps) {
-//   return { name, weight, reps };
-// }
-
-// const rows = [
-//   createData('Squat', 100, 5),
-//   createData('Bench Press', 100, 5),
-//   createData('Deadlift', 100, 5),
-//   createData('Overhead Press', 100, 5),
-//   createData('Pendlay Row', 100, 5),
-// ];
 
 export default function Program(props) {
   
@@ -52,28 +42,27 @@ export default function Program(props) {
       currentProgram = program;
     }
   })
-  
   const lifts = currentProgram.lifts;
+
   let activeLifts = [];
-  
   Object.keys(lifts).forEach((lift) => {
     if (lifts[lift].checked === true) {
       activeLifts = [
         ...activeLifts,
         {
-        name: lift,
-        weight: lifts[lift].oneRepMax,
+          name: lift,
+          weight: lifts[lift].oneRepMax,
         }
       ]
-      console.log(activeLifts);
     }
   })
+
+  console.log(sessions);
 
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
-
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
@@ -82,34 +71,56 @@ export default function Program(props) {
           </Container>
         </div>
 
-        <Container className={classes.cardGrid} maxWidth="md">
-          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+        {activeLifts.map((lift) => (
+          <Container className={classes.cardGrid}>
+            <Typography>{lift.name}</Typography>
+            <Grid container spacing={2}>
+              {sessions.map((session) => (
+                <Grid item lg={3}>
+                  <TableContainer component={Paper}>
+                    <Table aria-label="simple table">
+                    
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="justify">Weight (lbs)</TableCell>
+                          <TableCell align="justify">Reps</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                          <TableRow>
+                            <TableCell align="justify">{lift.weight * session.setValues.one}</TableCell>
+                            <TableCell align="justify">{session.repValues.one}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                          <TableCell align="justify">{lift.weight * session.setValues.two}</TableCell>
+                            <TableCell align="justify">{session.repValues.two}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                          <TableCell align="justify">{lift.weight * session.setValues.three}</TableCell>
+                            <TableCell align="justify">{session.repValues.three}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                          <TableCell align="justify">{lift.weight * session.setValues.four}</TableCell>
+                            <TableCell align="justify">{session.repValues.four}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                          <TableCell align="justify">{lift.weight * session.setValues.five}</TableCell>
+                            <TableCell align="justify">{session.repValues.five}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                          <TableCell align="justify">{lift.weight * session.setValues.six}</TableCell>
+                            <TableCell align="justify">{session.repValues.six}</TableCell>
+                          </TableRow>
 
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell align="justify">Weight (lbs)</TableCell>
-                  <TableCell align="justify">Reps</TableCell>
-                </TableRow>
-              </TableHead>
+                      </TableBody>
 
-              <TableBody>
-                {activeLifts.map((lift) => (
-                  <TableRow key={lift.name}>
-                    <TableCell component="th" scope="row">
-                      {lift.name}
-                    </TableCell>
-                    <TableCell align="justify">{lift.weight}</TableCell>
-                    <TableCell align="justify">5</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-
-            </Table>
-          </TableContainer>
-        </Container>
-
+                    </Table>
+                  </TableContainer>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        ))}
       </main>
     </React.Fragment>
   );
