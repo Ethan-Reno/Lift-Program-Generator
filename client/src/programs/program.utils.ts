@@ -1,5 +1,6 @@
-import { Lift } from './program.types';
+import { LiftType } from './program.types';
 import { lifts, sessions } from './program.lifts';
+import { useSelector } from 'react-redux';
 
 /**
  * Return a number rounded to the nearest interval.
@@ -23,18 +24,40 @@ export const roundWeight = (value, interval) => {
 
 // programs made of cycles, cycles made of lifts, lifts made of sessions, sessions made of sets
 
-export const createProgram = (cycles) => {
-  //for each program, create cycles
+const programs = useSelector((state: any) => state.programs.programs)
+const currentProgram = programs[0];
+
+export const createProgram = (programInputs) => {
+  // for each program, create cycles
+  let program = {
+    uuid: programInputs.uuid,
+    title: programInputs.title,
+    smallestInc: programInputs.smallestInc,
+    cycles: createCycles(programInputs)
+  }
+  return program;
 };
 
-export const createCycle = (lifts) => {
-  //for each cycle, create lifts
+export const createCycles = (programInputs) => {
+  let cycles = [];
+  for (let i = 0; i <= programInputs.cycles; i ++) {
+      cycles = [
+        ...cycles,
+        {cycles: createLift(programInputs.lifts)}
+    ]
+  }
+  return cycles;
 };
 
-export const createLift = (sessions) => {
-  //for each lift, create sessions
+export const createLift = (programInputs) => {
+  // for each lift, create sessions
+  console.log(`createLift has received programInputs`)
 };
 
-export const createSession = (sets) => {
-  //for each session, create sets
+export const createSession = (sessions) => {
+  // for each session, create sets
+  // sets are roughly: 
 };
+
+
+createProgram(currentProgram);

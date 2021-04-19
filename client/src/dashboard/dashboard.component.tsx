@@ -9,9 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { setPrograms } from '../programs/programs.slice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,18 +47,120 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useDispatch();
   const programs = useSelector((state: any) => state.programs.programs)
-
-  const getPrograms = (): any => {
-    return dispatch(setPrograms(programs))
-  }
-
-  useEffect(() => getPrograms(), [])
 
   const handleRedirect = (path: string) => {
     history.push({ pathname: path} )
   }
+ 
+
+//      TEST UTILS
+
+
+  const programsTest = useSelector((state: any) => state.programs.programs)
+  const currentProgram = programsTest[0];
+  
+  const roundWeight = (value, interval) => {
+    return Math.round(value/interval) * interval;
+  };
+
+  const createProgram = (programInputs) => {
+    // for each program, create cycles
+    let programTest1 = {
+      uuid: programInputs.uuid,
+      title: programInputs.title,
+      smallestInc: programInputs.smallestInc,
+      cycles: createCycles(programInputs)
+    }
+    console.log(programTest1);
+    return programTest1;
+  };
+  
+  const createCycles = (programInputs) => {
+    let cycles = [];
+    for (let i = 0; i < programInputs.cycles; i ++) {
+        cycles = [
+          ...cycles,
+          {lifts: createLift(programInputs)}
+      ]
+    }
+    return cycles;
+  };
+  
+  const createLift: any = (programInputs) => {
+    let lifts = [];
+    Object.entries(programInputs.lifts).forEach((lift: any) => {
+      if (lift[1].checked === true) {
+        lifts = [
+          ...lifts,
+          {
+            name: lift[0],
+            sessions: (createSession(lift[1].oneRepMax))
+          }
+        ]
+      }
+    })
+    return lifts;
+  };
+
+   
+  const createSession = (oneRepMax) => {
+    let sessionCount = 4;
+
+    let setValues = [
+      [
+        [5, 5, 5, 5, 5, 0],
+        [.40, .45, .55, .65, .75, .85]
+      ],
+      [
+        [5, 5, 5, 5, 3, 0],
+        [.40, .50, .60, .70, .80, .90]
+      ],
+      [
+        [5, 5, 5, 3, 3, 0],
+        [.40, .50, .60, .75, .85, .95]
+      ],
+      [
+        [5, 5, 5, 5, 5, 5],
+        [.40, .45, .50, .55, .65, .65]
+      ]
+    ]
+
+    let sessions = []
+    for (let i=0; i < sessionCount; i ++) {
+      sessions = [
+        ...sessions,
+        {
+          sets: (createSet(oneRepMax, setValues[i]))
+        }
+      ]
+    }
+    return sessions;
+  };
+  
+  const createSet = (oneRepMax, setValues) => {
+    let setCount = 6;
+
+    let sets = [];
+    for (let i=0; i < setCount; i ++) {
+      sets = [
+        ...sets,
+        {
+          reps: setValues[0][i],
+          weight: setValues[1][i]
+        }
+      ]
+    }
+    return sets;
+    // loop to create 6 sets per session
+    // where sets = key-value pairs of weigh - rep count?
+  }
+  
+  createProgram(currentProgram);
+
+// END TEST UTILS
+
+
 
   return (
     <React.Fragment>

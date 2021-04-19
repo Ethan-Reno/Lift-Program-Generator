@@ -1,4 +1,4 @@
-export interface Lift {
+export interface LiftType {
   name: string;
   label: string;
   unit: string;
@@ -13,9 +13,34 @@ export interface LiftsFormState {
 };
 
 export interface ProgramInputs {
-  uuid: string,
-  title: string,
-  cycles: number,
-  lifts: LiftsFormState,
-  smallestInc: number,
+  uuid: string;
+  title: string;
+  cycles: number;
+  lifts: LiftsFormState;
+  smallestInc: number;
+};
+
+export interface Program {
+  uuid: string;
+  title: string;
+  cycles: Cycle[];
+  smallestInc: number;
+}
+
+export interface Cycle {
+  lifts: Lift[];
+}
+
+export interface Lift {
+  name: string;
+  sessions: Session[];
+}
+
+export interface Session {
+  sets: Set[];
+}
+
+export interface Set {
+  reps: number;
+  weight: number;
 }

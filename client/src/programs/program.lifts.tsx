@@ -1,6 +1,6 @@
-import { Lift } from './program.types';
+import { LiftType } from './program.types';
 
-export const lifts: Lift[] = [
+export const lifts: LiftType[] = [
   {
     name: "Squat",
     label: "Squat",

@@ -16,9 +16,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import { Lift, LiftsFormState, ProgramInputs } from "../program.types";
+import { LiftType, LiftsFormState, ProgramInputs } from "../program.types";
 import { lifts } from '../program.lifts';
-import { addProgram } from '../programs.slice';
+import { addProgramInputs } from '../programs.slice';
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router";
 import { v4 as uuidv4 } from 'uuid';
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Initialize object to hold the state of lifts in the form
-const initLiftsFormState = (lifts: Lift[]): LiftsFormState  => {
+const initLiftsFormState = (lifts: LiftType[]): LiftsFormState  => {
   const state: LiftsFormState = {};
   
   // loop through each lift in the lift array
@@ -124,7 +124,7 @@ export default function CreateProgram() {
         })
         const data = await res.json()
       } */
-    dispatch(addProgram(programInputs))
+    dispatch(addProgramInputs(programInputs))
     history.push({pathname: "/dashboard"})
   }
 
@@ -174,7 +174,7 @@ export default function CreateProgram() {
               </FormControl>
             </Grid>
 
-            {lifts.map((lift: Lift) => (
+            {lifts.map((lift: LiftType) => (
               <React.Fragment key={lift.name}>
                 <Grid item xs={12} sm={6}>
                   <FormGroup>
