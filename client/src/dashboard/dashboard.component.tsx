@@ -60,8 +60,10 @@ export default function Dashboard() {
   const programsTest = useSelector((state: any) => state.programs.programs)
   const currentProgram = programsTest[0];
   
-  const roundWeight = (value, interval) => {
-    return Math.round(value/interval) * interval;
+  const setWeight = (oneRepMax, setValue, smallestInc) => {
+    let weight = oneRepMax * setValue;
+    weight = Math.round(weight/smallestInc) * smallestInc;
+    return weight;
   };
 
   const createProgram = (programInputs) => {
@@ -79,66 +81,53 @@ export default function Dashboard() {
   const createCycles = (programInputs) => {
     let cycles = [];
     for (let i = 0; i < programInputs.cycles; i ++) {
-        cycles = [
-          ...cycles,
-          {lifts: createLift(programInputs)}
+      cycles = [
+        ...cycles,
+        {lifts: createLift(programInputs, i)}
       ]
     }
     return cycles;
   };
   
-  const createLift: any = (programInputs) => {
+  const createLift = (programInputs, cycleNumber) => {
     let lifts = [];
     Object.entries(programInputs.lifts).forEach((lift: any) => {
       if (lift[1].checked === true) {
+        let cycleIncrement = cycleNumber * lift[1].cycleIncrement;
+        let oneRepMax = lift[1].oneRepMax + cycleIncrement
         lifts = [
           ...lifts,
           {
             name: lift[0],
-            sessions: (createSession(lift[1].oneRepMax))
+            sessions: (createSession(oneRepMax, programInputs))
           }
         ]
       }
     })
     return lifts;
   };
-
    
-  const createSession = (oneRepMax) => {
+  const createSession = (oneRepMax, programInputs) => {
     let sessionCount = 4;
-
     let setValues = [
-      [
-        [5, 5, 5, 5, 5, 0],
-        [.40, .45, .55, .65, .75, .85]
-      ],
-      [
-        [5, 5, 5, 5, 3, 0],
-        [.40, .50, .60, .70, .80, .90]
-      ],
-      [
-        [5, 5, 5, 3, 3, 0],
-        [.40, .50, .60, .75, .85, .95]
-      ],
-      [
-        [5, 5, 5, 5, 5, 5],
-        [.40, .45, .50, .55, .65, .65]
-      ]
+      [ [5, 5, 5, 5, 5, 0], [.40, .45, .55, .65, .75, .85] ],
+      [ [5, 5, 5, 5, 3, 0], [.40, .50, .60, .70, .80, .90] ],
+      [ [5, 5, 5, 3, 3, 0], [.40, .50, .60, .75, .85, .95] ],
+      [ [5, 5, 5, 5, 5, 5], [.40, .45, .50, .55, .65, .65] ]
     ]
-
     let sessions = []
     for (let i=0; i < sessionCount; i ++) {
       sessions = [
         ...sessions,
         {
-          sets: (createSet(oneRepMax, setValues[i]))
+          sets: (createSet(oneRepMax, setValues[i], programInputs))
         }
       ]
     }
     return sessions;
   };
   
-  const createSet = (oneRepMax, setValues) => {
+  const createSet = (oneRepMax, setValues, programInputs) => {
     let setCount = 6;
 
     let sets = [];
@@ -147,13 +136,11 @@ export default function Dashboard() {
         ...sets,
         {
           reps: setValues[0][i],
-          weight: setValues[1][i]
+          weight: setWeight(oneRepMax, setValues[1][i], programInputs.smallestInc)
         }
       ]
     }
     return sets;
-    // loop to create 6 sets per session
-    // where sets = key-value pairs of weigh - rep count?
   }
   
   createProgram(currentProgram);

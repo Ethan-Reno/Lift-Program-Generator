@@ -9,6 +9,7 @@ export interface LiftsFormState {
   [liftName: string]: {
     checked: boolean;
     oneRepMax: number;
+    cycleIncrement: number;
   };
 };
 

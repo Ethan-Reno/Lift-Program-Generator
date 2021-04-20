@@ -15,6 +15,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
+import FormLabel from "@material-ui/core/FormLabel";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { LiftType, LiftsFormState, ProgramInputs } from "../program.types";
 import { lifts } from '../program.lifts';
@@ -57,7 +58,8 @@ const initLiftsFormState = (lifts: LiftType[]): LiftsFormState  => {
   lifts.forEach((lift) => {
     state[lift.name] = { 
       checked: false,
-      oneRepMax: 0
+      oneRepMax: 0,
+      cycleIncrement: 0
     }
   })
   return state;
@@ -88,7 +90,8 @@ export default function CreateProgram() {
       [liftName]: {
         ...liftsFormState[liftName],
         checked: e.target.checked,
-        oneRepMax: e.target.checked ? liftsFormState[liftName].oneRepMax : 0
+        oneRepMax: e.target.checked ? liftsFormState[liftName].oneRepMax : 0,
+        cycleIncrement: e.target.checked ? liftsFormState[liftName].cycleIncrement : 0,
       }
     }
     setLiftsFormState(newState);
@@ -100,6 +103,17 @@ export default function CreateProgram() {
       [liftName]: {
         ...liftsFormState[liftName],
         oneRepMax: e.target.valueAsNumber
+      }
+    }
+    setLiftsFormState(newState);
+  }
+
+  const handleCycleIncrementChange = (liftName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newState: LiftsFormState = {
+      ...liftsFormState,
+      [liftName]: {
+        ...liftsFormState[liftName],
+        cycleIncrement: e.target.valueAsNumber
       }
     }
     setLiftsFormState(newState);
@@ -192,7 +206,7 @@ export default function CreateProgram() {
                   </FormGroup>
                 </Grid>
                       
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={3}>
                   <FormGroup> 
                     <FormControl component="fieldset" className={classes.formControl}>
                       <Input
@@ -202,6 +216,20 @@ export default function CreateProgram() {
                           type="number"
                           disabled={!liftsFormState[lift.name].checked}
                           endAdornment={<InputAdornment position="end">lb</InputAdornment>}
+                        />
+                    </FormControl>
+                  </FormGroup>
+                </Grid>
+
+                <Grid item xs={12} sm={3}>
+                  <FormGroup> 
+                    <FormControl component="fieldset" className={classes.formControl}>
+                      <Input
+                          className={classes.oneRepMax}
+                          onChange={handleCycleIncrementChange(lift.name)}
+                          value={liftsFormState[lift.name].cycleIncrement}
+                          type="number"
+                          disabled={!liftsFormState[lift.name].checked}
                         />
                     </FormControl>
                   </FormGroup>
