@@ -1,31 +1,8 @@
-import { LiftType } from './program.types';
-import { lifts, sessions } from './program.lifts';
-import { useSelector } from 'react-redux';
-
-/**
- * Return a number rounded to the nearest interval.
- * Example:
- * 
- *   roundToNearest(80, 100); // 100
- *   roundToNearest(25, 15);  // 30
- * 
- * @param {number} value    The number to round
- * @param {number} interval The numeric interval to round to
- * @return {number}
- */
-
-export const roundWeight = (value, interval) => {
-  return Math.round(value/interval) * interval;
+export const setWeight = (oneRepMax, setValue, smallestInc) => {
+  let weight = oneRepMax * setValue;
+  weight = Math.round(weight/smallestInc) * smallestInc;
+  return weight;
 };
-
-// for each program, call function that calcutates the cycles
-// for each cycle, call function that calculates the lifts
-// for each lift, call function that calculates the sets
-
-// programs made of cycles, cycles made of lifts, lifts made of sessions, sessions made of sets
-
-const programs = useSelector((state: any) => state.programs.programs)
-const currentProgram = programs[0];
 
 export const createProgram = (programInputs) => {
   // for each program, create cycles
@@ -40,24 +17,65 @@ export const createProgram = (programInputs) => {
 
 export const createCycles = (programInputs) => {
   let cycles = [];
-  for (let i = 0; i <= programInputs.cycles; i ++) {
-      cycles = [
-        ...cycles,
-        {cycles: createLift(programInputs.lifts)}
+  for (let i = 0; i < programInputs.cycles; i ++) {
+    cycles = [
+      ...cycles,
+      {lifts: createLift(programInputs, i)}
     ]
   }
   return cycles;
 };
 
-export const createLift = (programInputs) => {
-  // for each lift, create sessions
-  console.log(`createLift has received programInputs`)
+export const createLift = (programInputs, cycleNumber) => {
+  let lifts = [];
+  Object.entries(programInputs.lifts).forEach((lift: any) => {
+    if (lift[1].checked === true) {
+      let cycleIncrement = cycleNumber * lift[1].cycleIncrement;
+      let oneRepMax = lift[1].oneRepMax + cycleIncrement
+      lifts = [
+        ...lifts,
+        {
+          name: lift[0],
+          sessions: (createSession(oneRepMax, programInputs))
+        }
+      ]
+    }
+  })
+  return lifts;
+};
+ 
+export const createSession = (oneRepMax, programInputs) => {
+  let sessionCount = 4;
+  let setValues = [
+    [ [5, 5, 5, 5, 5, 0], [.40, .45, .55, .65, .75, .85] ],
+    [ [5, 5, 5, 5, 3, 0], [.40, .50, .60, .70, .80, .90] ],
+    [ [5, 5, 5, 3, 3, 0], [.40, .50, .60, .75, .85, .95] ],
+    [ [5, 5, 5, 5, 5, 5], [.40, .45, .50, .55, .65, .65] ]
+  ]
+  let sessions = []
+  for (let i=0; i < sessionCount; i ++) {
+    sessions = [
+      ...sessions,
+      {
+        sets: (createSet(oneRepMax, setValues[i], programInputs))
+      }
+    ]
+  }
+  return sessions;
 };
 
-export const createSession = (sessions) => {
-  // for each session, create sets
-  // sets are roughly: 
-};
+export const createSet = (oneRepMax, setValues, programInputs) => {
+  let setCount = 6;
 
-
-createProgram(currentProgram);
+  let sets = [];
+  for (let i=0; i < setCount; i ++) {
+    sets = [
+      ...sets,
+      {
+        reps: setValues[0][i],
+        weight: setWeight(oneRepMax, setValues[1][i], programInputs.smallestInc)
+      }
+    ]
+  }
+  return sets;
+}

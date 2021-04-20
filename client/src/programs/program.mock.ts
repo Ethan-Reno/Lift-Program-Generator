@@ -22,5 +22,5 @@ const mockProgram: Program = {
       ],
     }
   ],
-  smallestInc: 0,
+  roundNumber: 0,
 }

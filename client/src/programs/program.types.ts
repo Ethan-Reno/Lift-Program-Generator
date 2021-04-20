@@ -18,14 +18,14 @@ export interface ProgramInputs {
   title: string;
   cycles: number;
   lifts: LiftsFormState;
-  smallestInc: number;
+  roundNumber: number;
 };
 
 export interface Program {
   uuid: string;
   title: string;
   cycles: Cycle[];
-  smallestInc: number;
+  roundNumber: number;
 }
 
 export interface Cycle {

@@ -11,11 +11,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormLabel from "@material-ui/core/FormLabel";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { LiftType, LiftsFormState, ProgramInputs } from "../program.types";
 import { lifts } from '../program.lifts';
@@ -69,6 +65,7 @@ const initLiftsFormState = (lifts: LiftType[]): LiftsFormState  => {
       deadlift: {
         checked: false,
         oneRepMax: 0
+        roundNumber: 0
       },
       {...}
     }
@@ -80,7 +77,7 @@ export default function CreateProgram() {
   const history = useHistory();
   const [title, setTitle] = useState('');
   const [cycles, setCycles] = useState(0);
-  const [smallestInc, setSmallestInc] = useState(0);
+  const [roundNumber, setRoundNumber] = useState(0);
   const [liftsFormState, setLiftsFormState] = useState<LiftsFormState>(initLiftsFormState(lifts));
   const dispatch = useDispatch();
 
@@ -128,7 +125,7 @@ export default function CreateProgram() {
       title: title,
       cycles: cycles,
       lifts: {...liftsFormState},
-      smallestInc: smallestInc
+      roundNumber: roundNumber
     }
     /*try {
         const res = await fetch('http://localhost:5000/programs', {
@@ -175,17 +172,16 @@ export default function CreateProgram() {
             </Grid>
 
             <Grid item xs={12}>
-              <FormControl fullWidth required variant="outlined">
-                <InputLabel>Smallest weight increment</InputLabel>
-                <Select
-                  onChange={(e: any) => setSmallestInc(e.target.value)}
-                  label="Smallest weight increment"
-                >
-                  <MenuItem value={2.5}> 1.25 lb plates </MenuItem>
-                  <MenuItem value={5}> 2.5 lb plates </MenuItem>
-                  <MenuItem value={10}> 5 lb plates </MenuItem>
-                </Select>
-              </FormControl>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onChange={(e: any) => setRoundNumber(e.target.value)}
+                  label="Round lift values to the nearest..."
+                  name="weightIncrement"
+                  type="number"
+                  InputProps={{ inputProps: { min: 0 }} }
+                />
             </Grid>
 
             {lifts.map((lift: LiftType) => (
@@ -230,6 +226,7 @@ export default function CreateProgram() {
                           value={liftsFormState[lift.name].cycleIncrement}
                           type="number"
                           disabled={!liftsFormState[lift.name].checked}
+                          endAdornment={<InputAdornment position="end">lb</InputAdornment>}
                         />
                     </FormControl>
                   </FormGroup>
