@@ -44,8 +44,7 @@ export default function Program(props) {
   })
 
   let currentCycle = currentProgram.cycles[0];
-  console.log(currentCycle.lifts);
-
+  // console.log(currentCycle.lifts);
 
   return (
     <React.Fragment>

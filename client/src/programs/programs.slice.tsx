@@ -15,7 +15,7 @@ const programSlice = createSlice({
       state.programs.push(program)
     },
     deleteProgram: ( state, action ) => {
-      state.programs = state.programs.filter((program) => program.id !== action.payload)
+      state.programs = state.programs.filter((program) => program.uuid !== action.payload)
     },
   },
 })

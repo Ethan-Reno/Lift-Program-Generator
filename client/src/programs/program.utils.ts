@@ -1,5 +1,6 @@
 export const setWeight = (oneRepMax, setValue, roundNumber) => {
-  let weight = oneRepMax * setValue;
+  let trainingMax = oneRepMax * .9
+  let weight = trainingMax * setValue;
   weight = Math.round(weight/roundNumber) * roundNumber;
   return weight;
 };
@@ -73,7 +74,7 @@ export const createSet = (oneRepMax, setValues, programInputs) => {
       ...sets,
       {
         reps: setValues[0][i],
-        weight: setWeight(oneRepMax, setValues[1][i], programInputs.smallestInc)
+        weight: setWeight(oneRepMax, setValues[1][i], programInputs.roundNumber)
       }
     ]
   }

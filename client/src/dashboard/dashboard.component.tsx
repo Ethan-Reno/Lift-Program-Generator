@@ -9,9 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Program } from '../programs/program.types';
+import { deleteProgram } from '../programs/programs.slice';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -49,9 +50,14 @@ export default function Dashboard() {
   const classes = useStyles();
   const history = useHistory();
   const programs = useSelector((state: any) => state.programs.programs)
+  const dispatch = useDispatch();
 
   const handleRedirect = (path: string) => {
     history.push({ pathname: path} )
+  }
+
+  const handleDelete = (program) => {
+    dispatch(deleteProgram(program))
   }
  
   return (
@@ -84,7 +90,12 @@ export default function Dashboard() {
                       >
                         View
                       </Button>
-                      <Button size="small">Delete</Button>
+                      <Button 
+                        size="small"
+                        onClick={() => {handleDelete(program.uuid)}}
+                      >
+                        Delete
+                      </Button>
                     </ButtonGroup>
                   </CardActions>
                   </CardContent>
