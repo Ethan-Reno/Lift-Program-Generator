@@ -1,6 +1,4 @@
-import { Program } from "./program.types";
-
-const mockProgram: Program = {
+export const mockProgram = {
   uuid: '',
   title: '',
   cycles: [
@@ -10,6 +8,7 @@ const mockProgram: Program = {
           name: '',
           sessions: [
             {
+              number: 0,
               sets:[
                 {
                   reps: 0,

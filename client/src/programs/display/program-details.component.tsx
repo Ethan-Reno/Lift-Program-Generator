@@ -1,19 +1,23 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableContainer } from '@material-ui/core';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowLeft from '@material-ui/icons/ArrowLeft';
-import ArrowRight from '@material-ui/icons/ArrowRight';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import { Program, Lift } from "../program.types";
+import { makeStyles } from '@material-ui/core/styles';
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Grid, 
+  Button,
+  Paper, 
+  Container, 
+  CssBaseline, 
+  Typography, 
+  IconButton } from '@material-ui/core';
+import { ArrowRight, ArrowLeft, Done, Clear } from '@material-ui/icons';
+import { Program, Lift, Session, Set } from "../program.types";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -30,10 +34,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProgramDisplay(props) {
   const classes = useStyles();
-  // const history = useHistory();
-  const programs = useSelector((state: any) => state.programs.programs)
-  const [currentCycleIndex, setCurrentCycleIndex] = useState(0);
-  
+  const history = useHistory();
+  const programs = useSelector((state: any) => state.programs.programs) // any type for now, until I figure out how I want to type the redux state
+
+
   // set currentProgram to the program with a uuid matching the url uuid parameter
   let currentProgram;
   const id = props.match.params.id
@@ -43,11 +47,17 @@ export default function ProgramDisplay(props) {
     }
   })
 
+  const [currentCycleIndex, setCurrentCycleIndex] = useState(0);
   let currentCycle = currentProgram.cycles[currentCycleIndex];
   let lifts = currentCycle.lifts;
 
   const isCycleAtZero: boolean = currentCycleIndex === 0;
   const isCycleAtMax: boolean = currentCycleIndex === currentProgram.cycles.length - 1;
+  const isSessionComplete: boolean = false; //import state from session component
+
+  const handleRedirect = (path: string) => {
+    history.push( { pathname: path} )
+  }
 
   return (
     <React.Fragment>
@@ -64,12 +74,12 @@ export default function ProgramDisplay(props) {
 
         <Grid container direction="row" justify="center" alignItems="center">
           {
-          isCycleAtZero? <Typography></Typography> 
+          isCycleAtZero? <IconButton> <ArrowLeft/> </IconButton>
           : <IconButton onClick={() => setCurrentCycleIndex(currentCycleIndex - 1)}> <ArrowLeft /> </IconButton>
           }
           <Typography>Cycle: {currentCycleIndex + 1}</Typography>
           {
-          isCycleAtMax? <Typography></Typography>
+          isCycleAtMax? <IconButton> <ArrowRight/> </IconButton>
           : <IconButton onClick={() => setCurrentCycleIndex(currentCycleIndex + 1)}><ArrowRight /></IconButton>
           }
         </Grid>
@@ -78,7 +88,7 @@ export default function ProgramDisplay(props) {
           <Container className={classes.cardGrid} key={lift.name}>
             <Typography>{lift.name}</Typography>
             <Grid container spacing={2}>
-              {lift.sessions.map((session) => (
+              {lift.sessions.map((session: Session) => (
                 <Grid item lg={3}>
                   <TableContainer component={Paper}>
                     <Table aria-label="simple table">
@@ -90,17 +100,37 @@ export default function ProgramDisplay(props) {
                         </TableRow>
                       </TableHead>
 
-                      <TableBody>
-                        {session.sets.map((set) => (
-                          <TableRow>
-                            <TableCell align="justify">{set.weight}</TableCell>
-                            <TableCell align="justify">{set.reps}</TableCell>
-                          </TableRow>
+                        {session.sets.map((set: Set) => (
+                          <TableBody>
+                            <TableRow>
+                              <TableCell align="justify">{set.weight}</TableCell>
+                              <TableCell align="justify">{set.reps}</TableCell>
+                            </TableRow>
+                          </TableBody>
                         ))}
-                      </TableBody>
+                      
                       
                     </Table>
                   </TableContainer>
+
+                  <Grid container direction="row">
+                    <Button 
+                      size="small"
+                      variant="outlined"
+                      onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
+                    >
+                      Start session
+                      {/* Eventually make this read a variable that changes based on state - done or not */}
+                    </Button>
+                    <Typography>Completed?</Typography>
+                    {isSessionComplete? 
+                      <Done color="primary" />
+                    : 
+                      <Clear color="secondary" />
+                    }
+                    
+                  </Grid>
+
                 </Grid>
               ))}
             </Grid>

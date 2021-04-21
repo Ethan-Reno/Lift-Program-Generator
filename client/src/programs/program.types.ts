@@ -26,7 +26,7 @@ export interface Program {
   title: string;
   cycles: Cycle[];
   roundNumber: number;
-}
+} 
 
 export interface Cycle {
   lifts: Lift[];
@@ -38,6 +38,7 @@ export interface Lift {
 }
 
 export interface Session {
+  number: number;
   sets: Set[];
 }
 

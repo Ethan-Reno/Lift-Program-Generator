@@ -58,6 +58,7 @@ export const createSession = (oneRepMax, programInputs) => {
     sessions = [
       ...sessions,
       {
+        number: i,
         sets: (createSet(oneRepMax, setValues[i], programInputs))
       }
     ]
