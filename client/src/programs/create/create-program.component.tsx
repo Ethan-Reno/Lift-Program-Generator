@@ -15,7 +15,7 @@ import Input from "@material-ui/core/Input";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { LiftType, LiftsFormState, ProgramInputs } from "../program.types";
 import { lifts } from '../program.lifts';
-import { addProgramInputs } from '../programs.slice';
+import { addProgram } from '../programs.slice';
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router";
 import { v4 as uuidv4 } from 'uuid';
@@ -126,7 +126,7 @@ export default function CreateProgram() {
       cycles: cycles,
       lifts: {...liftsFormState},
       roundNumber: roundNumber
-    }
+    };
     /*try {
         const res = await fetch('http://localhost:5000/programs', {
           method: 'POST',
@@ -135,8 +135,8 @@ export default function CreateProgram() {
         })
         const data = await res.json()
       } */
-    dispatch(addProgramInputs(programInputs))
-    history.push({pathname: "/dashboard"})
+    dispatch(addProgram(programInputs));
+    history.push({pathname: "/dashboard"});
   }
 
   return (

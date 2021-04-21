@@ -1,6 +1,6 @@
-export const setWeight = (oneRepMax, setValue, smallestInc) => {
+export const setWeight = (oneRepMax, setValue, roundNumber) => {
   let weight = oneRepMax * setValue;
-  weight = Math.round(weight/smallestInc) * smallestInc;
+  weight = Math.round(weight/roundNumber) * roundNumber;
   return weight;
 };
 
@@ -9,7 +9,7 @@ export const createProgram = (programInputs) => {
   let program = {
     uuid: programInputs.uuid,
     title: programInputs.title,
-    smallestInc: programInputs.smallestInc,
+    roundNumber: programInputs.roundNumber,
     cycles: createCycles(programInputs)
   }
   return program;

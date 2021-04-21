@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Program } from '../programs/program.types';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -52,7 +53,7 @@ export default function Dashboard() {
   const handleRedirect = (path: string) => {
     history.push({ pathname: path} )
   }
-
+ 
   return (
     <React.Fragment>
       <CssBaseline />
@@ -68,16 +69,13 @@ export default function Dashboard() {
 
         <Container className={classes.cardGrid} maxWidth="lg">
           <Grid container spacing={4}>
-            {programs.map((program) => (
+            {programs.map((program: Program) => (
               <Grid item key={program.title} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {program.title}
-                    </Typography>
-                    <Typography variant="body1" component="p">
-                      Cycles: {program.cycles}
-                    </Typography>                    
+                    </Typography>                 
                   <CardActions>
                     <ButtonGroup>
                       <Button 

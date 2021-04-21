@@ -42,29 +42,10 @@ export default function Program(props) {
       currentProgram = program;
     }
   })
-  const lifts = currentProgram.lifts;
 
-  let activeLifts = [];
-  Object.keys(lifts).forEach((lift) => {
-    if (lifts[lift].checked === true) {
-      activeLifts = [
-        ...activeLifts,
-        {
-          name: lift,
-          oneRepMax: lifts[lift].oneRepMax,
-        }
-      ]
-    }
-  })
+  let currentCycle = currentProgram.cycles[0];
+  console.log(currentCycle.lifts);
 
-/* Helper function for calculating lift value in table rows:
-  
-  multiply weight property by session.setValues.#
-  add 5 (upper) or 10 (lower) for each cycle after 1st - values passed by form state for future custom control?
-  current cycle determined by pagination - re-render, not a new view
-  round to nearest increment passed by form state (typically 2.5, 5 or 10)
-
-*/
 
   return (
     <React.Fragment>
@@ -78,7 +59,7 @@ export default function Program(props) {
           </Container>
         </div>
 
-        {activeLifts.map((lift) => (
+        {/* {activeLifts.map((lift) => (
           <Container className={classes.cardGrid}>
             <Typography>{lift.name}</Typography>
             <Grid container spacing={2}>
@@ -127,7 +108,7 @@ export default function Program(props) {
               ))}
             </Grid>
           </Container>
-        ))}
+        ))} */}
       </main>
     </React.Fragment>
   );

@@ -1,26 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { createProgram, createCycles, createLift, createSession } from './program.utils'
+import { createProgram } from './program.utils'
 
-// { contacts: { programs: [...] } } 
+// { contacts: { programs: [...] } }
 // state itself will be a programs array
 
 const programSlice = createSlice({
   name: "programs",
   initialState: {
-    programs: [],
-    currentProgram: [],
+    programs: []
   },
   reducers: {
-    // setCurrentProgram: ( state, action ) => {
-      
-    //   createProgram(action.payload);
-    //   createCycle(action.payload);
-    //   createLift(action.payload);
-    //   createSession(action.payload);
-    //   return 
-    // },
-    addProgramInputs: ( state, action ) => {
-      state.programs.push(action.payload)
+    addProgram: ( state, action ) => {
+      let program = createProgram(action.payload)
+      state.programs.push(program)
     },
     deleteProgram: ( state, action ) => {
       state.programs = state.programs.filter((program) => program.id !== action.payload)
@@ -31,6 +23,6 @@ const programSlice = createSlice({
 // Type EVERYTHING actions, state, 
 
 // Action creates are generated for each case reducer function
-export const { addProgramInputs, deleteProgram } = programSlice.actions;
+export const { addProgram, deleteProgram } = programSlice.actions;
 
 export default programSlice.reducer;
