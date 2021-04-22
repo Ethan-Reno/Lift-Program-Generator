@@ -4,6 +4,7 @@ export const setWeight = (oneRepMax, setValue, roundNumber) => {
   weight = Math.round(weight/roundNumber) * roundNumber;
   return weight;
 };
+//TODO: ROUND UP IF RESULT IS 0
 
 export const createProgram = (programInputs) => {
   // for each program, create cycles

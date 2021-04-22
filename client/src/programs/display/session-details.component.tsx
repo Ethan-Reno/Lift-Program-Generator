@@ -104,7 +104,6 @@ export default function SessionDisplay(props) {
               </TableBody>
             ))}
 
-            
           </Table>
         </TableContainer>
         </Container>

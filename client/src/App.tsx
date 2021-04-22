@@ -5,7 +5,6 @@ import Landing from './components/landing.component';
 import SignIn from './auth/sign-in.component';
 import SignUp from './auth/sign-up.component';
 import Dashboard from './dashboard/dashboard.component';
-import Counter from './counter/counter.component'
 import CreateProgram from './programs/create/create-program.component';
 import ProgramDetails from './programs/display/program-details.component';
 import SessionDetails from './programs/display/session-details.component';
@@ -18,7 +17,6 @@ const App = () => (
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />
           <Route path="/dashboard" component={Dashboard} />
-          <Route path="/counter" component={Counter} />
           <Route path="/create" component={CreateProgram} />
           <Route path="/programs/:id/:cycle/:lift/:session" component={SessionDetails} />
           <Route path="/programs/:id" component={ProgramDetails} />
