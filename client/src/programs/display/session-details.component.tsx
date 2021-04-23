@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
-  Button,
-  ButtonGroup,
   Table, 
   TableBody, 
   TableCell, 
   TableContainer, 
   TableHead, 
   TableRow, 
-  Grid, 
   Paper, 
   Container, 
   CssBaseline, 
   Typography, } from '@material-ui/core';
 import { Program, Cycle, Lift, Set } from "../program.types";
+import ActiveSetDisplay from "./active-set-component";
 
 export default function SessionDisplay(props) {
   
@@ -38,10 +36,6 @@ export default function SessionDisplay(props) {
   }));
   
   const classes = useStyles();
-  const history = useHistory();
-  const [sessionIsActive, setSessionIsActive] = useState(false);
-  const [betweenSets, setBetweenSets] = useState(false);
-  const [activeSet, setActiveSet] = useState(0);
 
   const programs = useSelector((state: any) => state.programs.programs) // any type for now, until I figure out how I want to type the redux state
   let {id, cycle, lift, session} = useParams();
@@ -70,18 +64,6 @@ export default function SessionDisplay(props) {
   const setCurrentNumber = (number) => {
     let currentNumber = parseInt(number) + 1;
     return currentNumber;
-  }
-
-  const handleSetChange = (activeSet: number) => {
-    if (activeSet === currentSession.sets.length - 1) {
-      return console.log('maxed out');
-    } else {
-      return setActiveSet(activeSet + 1);
-    }
-  }
-
-  const handleBetweenSets = () => {
-    return setBetweenSets(!betweenSets)
   }
 
   return(
@@ -115,7 +97,7 @@ export default function SessionDisplay(props) {
               </TableHead>
 
               {currentSession.sets.map((set: Set) => (
-                <TableBody>
+                <TableBody key={set.weight}>
                   <TableRow>
                     <TableCell align="justify">{set.weight}</TableCell>
                     <TableCell align="justify">{set.reps}</TableCell>
@@ -125,28 +107,8 @@ export default function SessionDisplay(props) {
 
             </Table>
           </TableContainer>
-        
 
-          <Typography component="h1" variant="h5" align="center" color="textPrimary" gutterBottom>Set: {activeSet + 1}</Typography>
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table" className={classes.activeSet}>
-
-              <TableHead>
-                <TableRow>
-                  <TableCell align="justify">Weight (lbs)</TableCell>
-                  <TableCell align="justify">Reps</TableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                <TableRow>
-                  <TableCell align="justify">{currentSession.sets[activeSet].weight}</TableCell>
-                  <TableCell align="justify">{currentSession.sets[activeSet].reps}</TableCell>
-                </TableRow>
-              </TableBody>
-              
-            </Table>
-          </TableContainer>
+          <ActiveSetDisplay currentSession={currentSession} currentProgram={currentProgram} />
         </Container>
         
       </main>
