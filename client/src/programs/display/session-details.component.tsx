@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,10 +31,18 @@ export default function SessionDisplay(props) {
     table: {
       minWidth: 100,
     },
+    activeSet: {
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
+    },
   }));
   
   const classes = useStyles();
   const history = useHistory();
+  const [sessionIsActive, setSessionIsActive] = useState(false);
+  const [betweenSets, setBetweenSets] = useState(false);
+  const [activeSet, setActiveSet] = useState(0);
+
   const programs = useSelector((state: any) => state.programs.programs) // any type for now, until I figure out how I want to type the redux state
   let {id, cycle, lift, session} = useParams();
   id = id.substring(1);
@@ -42,13 +50,13 @@ export default function SessionDisplay(props) {
   lift = lift.substring(1);
   session = session.substring(1);
 
+  // Set all session values as session selected from the program view   --  import this as a util?
   let currentProgram: Program;
   programs.forEach((program: Program) => {
     if (program.uuid === id) {
       currentProgram = program;
     }
   });
-
   let currentCycle: Cycle = currentProgram.cycles[cycle];
   let currentLift: Lift;
   for (let i=0; i < currentCycle.lifts.length; i ++) {
@@ -58,9 +66,22 @@ export default function SessionDisplay(props) {
   };
   let currentSession = currentLift.sessions[session];
 
+  // Add 1 to display numbers to correct for 0 index
   const setCurrentNumber = (number) => {
     let currentNumber = parseInt(number) + 1;
     return currentNumber;
+  }
+
+  const handleSetChange = (activeSet: number) => {
+    if (activeSet === currentSession.sets.length - 1) {
+      return console.log('maxed out');
+    } else {
+      return setActiveSet(activeSet + 1);
+    }
+  }
+
+  const handleBetweenSets = () => {
+    return setBetweenSets(!betweenSets)
   }
 
   return(
@@ -83,54 +104,53 @@ export default function SessionDisplay(props) {
         </div>
 
         <Container maxWidth="xs">
-        <TableContainer component={Paper}>
-          <Table aria-label="simple table">
-          
-            <TableHead>
-              <TableRow>
-                <TableCell align="justify">Weight (lbs)</TableCell>
-                <TableCell align="justify">Reps</TableCell>
-                <TableCell align="justify">Complete?</TableCell>
-              </TableRow>
-            </TableHead>
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+            
+              <TableHead>
+                <TableRow>
+                  <TableCell align="justify">Weight (lbs)</TableCell>
+                  <TableCell align="justify">Reps</TableCell>
+                </TableRow>
+              </TableHead>
 
-            {currentSession.sets.map((set: Set) => (
+              {currentSession.sets.map((set: Set) => (
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="justify">{set.weight}</TableCell>
+                    <TableCell align="justify">{set.reps}</TableCell>
+                  </TableRow>
+                </TableBody>
+              ))}
+
+            </Table>
+          </TableContainer>
+        
+
+          <Typography component="h1" variant="h5" align="center" color="textPrimary" gutterBottom>Set: {activeSet + 1}</Typography>
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table" className={classes.activeSet}>
+
+              <TableHead>
+                <TableRow>
+                  <TableCell align="justify">Weight (lbs)</TableCell>
+                  <TableCell align="justify">Reps</TableCell>
+                </TableRow>
+              </TableHead>
+
               <TableBody>
                 <TableRow>
-                  <TableCell align="justify">{set.weight}</TableCell>
-                  <TableCell align="justify">{set.reps}</TableCell>
-                  <TableCell align="justify">cb</TableCell>
+                  <TableCell align="justify">{currentSession.sets[activeSet].weight}</TableCell>
+                  <TableCell align="justify">{currentSession.sets[activeSet].reps}</TableCell>
                 </TableRow>
               </TableBody>
-            ))}
-
-          </Table>
-        </TableContainer>
+              
+            </Table>
+          </TableContainer>
         </Container>
-
-        <Grid container direction="row" justify="center" alignItems="center">
-          <ButtonGroup>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              onClick={() => history.push(`/programs/:${currentProgram.uuid}`)}
-            >
-              Complete
-            </Button>
-
-            <Button
-              variant="outlined"
-              color="secondary"
-              onClick={() => history.push(`/programs/:${currentProgram.uuid}`)}
-            >
-              Go back
-            </Button>
-          </ButtonGroup>
-        </Grid>
-
+        
       </main>
     </React.Fragment>
   )
 
-};
+}
