@@ -12,7 +12,9 @@ import {
   TableRow, 
   Grid, 
   Paper, 
+  TextField,
   Typography, } from '@material-ui/core';
+  import Countdown from 'react-countdown';
 // import { Program, Cycle, Lift, Set } from "../program.types";
 
 export default function ActiveSetDisplay({currentSession, currentProgram}) { //props = currentSession, 
@@ -39,9 +41,12 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
   const [activeSet, setActiveSet] = useState(0);
   const [sessionIsActive, setSessionIsActive] = useState(false);
   const [betweenSets, setBetweenSets] = useState(false);
+  const [amrapInput, setAmrapInput] = useState(0);
+
+  let finalSet = currentSession.sets.length - 1;
 
   const handleSetChange = (activeSet: number) => {
-    if (activeSet === currentSession.sets.length - 1) {
+    if (activeSet === finalSet) {
       return console.log('maxed out');
     } else {
       return setActiveSet(activeSet + 1);
@@ -56,9 +61,19 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
     history.push( { pathname: path} )
   }
 
-  let finalSet = currentSession.sets.length - 1;
   let table = null;
   let buttons = null;
+  const TimerComplete = () => <span>Good to go!</span>;
+
+  const renderer = ({minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return <TimerComplete />;
+    } else {
+      // Render a countdown
+      return <span>{minutes}:{seconds}</span>;
+    }
+  };
 
   if (sessionIsActive) {
     table = <React.Fragment>
@@ -93,14 +108,24 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
         >
           Begin next set
         </Button>
+        <Countdown date={Date.now() + 179000} renderer={renderer}/>
       </ButtonGroup>;
     } else if (activeSet === finalSet) {
       buttons = <ButtonGroup>
+        <TextField
+          variant="outlined"
+          required
+          fullWidth
+          onChange={e => setAmrapInput(parseInt(e.target.value))}
+          label="amrap input"
+          name="amrapInput"
+          type="number"
+        />
         <Button
           fullWidth
           variant="contained"
           color="primary"
-          onClick={() => setSessionIsActive(!sessionIsActive)}
+          onClick={() => handleRedirect(`/programs/:${currentProgram.uuid}`)}
         >
           Complete Session
         </Button>
