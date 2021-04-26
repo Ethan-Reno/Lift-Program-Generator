@@ -15,9 +15,11 @@ import {
   TextField,
   Typography, } from '@material-ui/core';
   import Countdown from 'react-countdown';
-// import { Program, Cycle, Lift, Set } from "../program.types";
+import { AmrapData } from "../program.types";
+import { addData } from "../amrap-data.slice";
+import { useDispatch } from 'react-redux';
 
-export default function ActiveSetDisplay({currentSession, currentProgram}) { //props = currentSession, 
+export default function ActiveSetDisplay({currentLift, currentSession, currentCycle, currentProgram}) { //props = currentSession, 
   
   // const useStyles = makeStyles((theme) => ({
   //   heroContent: {
@@ -37,6 +39,7 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
   // }));
 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [activeSet, setActiveSet] = useState(0);
   const [sessionIsActive, setSessionIsActive] = useState(false);
@@ -44,6 +47,8 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
   const [amrapInput, setAmrapInput] = useState(0);
 
   let finalSet = currentSession.sets.length - 1;
+  let setWeight = currentSession.sets[activeSet].weight;
+  let setReps = currentSession.sets[activeSet].reps;
 
   const handleSetChange = (activeSet: number) => {
     if (activeSet === finalSet) {
@@ -59,6 +64,40 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
 
   const handleRedirect = (path: string) => {
     history.push( { pathname: path} )
+  }
+
+  // Add 1 to display numbers to correct for 0 index
+  const setCurrentNumber = (number) => {
+    let currentNumber = parseInt(number) + 1;
+    return currentNumber;
+  }
+
+  const calculate1RM = (weight: number, reps: number) => {
+    let c1RM: number;
+    let brackets = 1 + reps / 30;
+    if (reps === 1) {
+      c1RM = 1;
+    } else {
+      c1RM = weight * brackets
+    }
+    return Math.ceil(c1RM);
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const amrapData: AmrapData = {
+      liftName: currentLift.name,
+      timestamp: Date.now(),
+      weight: setWeight,
+      reps: amrapInput,
+      c1RM: calculate1RM(setWeight, amrapInput),
+      programUuid: currentProgram.uuid,
+      programTitle: currentProgram.name,
+      cycle: currentCycle,
+      session: setCurrentNumber(currentSession.number),
+    }
+    dispatch(addData(amrapData));
+    handleRedirect(`/programs/:${currentProgram.uuid}`)
   }
 
   let table = null;
@@ -90,8 +129,8 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
 
           <TableBody>
             <TableRow>
-              <TableCell align="justify">{currentSession.sets[activeSet].weight}</TableCell>
-              <TableCell align="justify">{currentSession.sets[activeSet].reps}</TableCell>
+              <TableCell align="justify">{setWeight}</TableCell>
+              <TableCell align="justify">{setReps}</TableCell>
             </TableRow>
           </TableBody>
           
@@ -111,25 +150,27 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
         <Countdown date={Date.now() + 179000} renderer={renderer}/>
       </ButtonGroup>;
     } else if (activeSet === finalSet) {
-      buttons = <ButtonGroup>
-        <TextField
-          variant="outlined"
-          required
-          fullWidth
-          onChange={e => setAmrapInput(parseInt(e.target.value))}
-          label="amrap input"
-          name="amrapInput"
-          type="number"
-        />
-        <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={() => handleRedirect(`/programs/:${currentProgram.uuid}`)}
-        >
-          Complete Session
-        </Button>
-      </ButtonGroup>
+      buttons = <form onSubmit={handleSubmit} noValidate>
+        <ButtonGroup>
+          <TextField
+            variant="outlined"
+            required
+            fullWidth
+            onChange={e => setAmrapInput(parseInt(e.target.value))}
+            label="amrap input"
+            name="amrapInput"
+            type="number"
+          />
+          <Button
+            fullWidth
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            Complete Session
+          </Button>
+        </ButtonGroup>
+      </form>
     } else {
       buttons = <ButtonGroup>
         <Button
@@ -164,4 +205,3 @@ export default function ActiveSetDisplay({currentSession, currentProgram}) { //p
     </div>
   )
 }
-

@@ -46,3 +46,34 @@ export interface Set {
   reps: number;
   weight: number;
 }
+
+// interface AmprapData {
+//   lifts: { [liftName: string]: AmprapLift };
+// }
+
+// interface AmprapLift {
+//   data: AmrapLiftDataPoint[];  
+// }
+
+// interface AmrapLiftDataPoint {
+//   timestamp: Date;
+//   reps: number;
+//   weight: number;
+//   c1RM: number;
+//   programUuid: string;
+//   programTitle: string;
+//   cycle: number;
+//   session: number;
+// }
+
+export interface AmrapData {
+  liftName: string,
+  timestamp: number,
+  weight: number,
+  reps: number,
+  c1RM: number,
+  programUuid: number,
+  programTitle: string,
+  cycle: number,
+  session: number,
+}

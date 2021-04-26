@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 //import { createAmrapDataPoint } from './program.utils'
 
-const amrapSlice = createSlice({
-  name: "amrap",
+const amrapDataSlice = createSlice({
+  name: "amrapData",
   initialState: {
-    lifts: []
+    data: []
   },
   reducers: {
     addData: ( state, action ) => {
-
+      state.data.push(action.payload);
     },
   },
 })
@@ -16,6 +16,6 @@ const amrapSlice = createSlice({
 // Type EVERYTHING actions, state, 
 
 // Action creates are generated for each case reducer function
-export const { addData } = amrapSlice.actions;
+export const { addData } = amrapDataSlice.actions;
 
-export default amrapSlice.reducer;
+export default amrapDataSlice.reducer;

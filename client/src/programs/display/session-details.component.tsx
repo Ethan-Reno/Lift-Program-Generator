@@ -38,7 +38,10 @@ export default function SessionDisplay(props) {
   const classes = useStyles();
 
   const programs = useSelector((state: any) => state.programs.programs) // any type for now, until I figure out how I want to type the redux state
+  
   let {id, cycle, lift, session} = useParams();
+  
+  // Remove colons from params
   id = id.substring(1);
   cycle = cycle.substring(1);
   lift = lift.substring(1);
@@ -108,11 +111,10 @@ export default function SessionDisplay(props) {
             </Table>
           </TableContainer>
 
-          <ActiveSetDisplay currentSession={currentSession} currentProgram={currentProgram} />
+          <ActiveSetDisplay currentLift={currentLift} currentSession={currentSession} currentCycle={setCurrentNumber(cycle)} currentProgram={currentProgram} />
         </Container>
         
       </main>
     </React.Fragment>
   )
-
 }
