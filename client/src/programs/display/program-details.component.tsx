@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
-  Table, 
+  Table,
   TableBody, 
   TableCell, 
   TableContainer, 
@@ -54,6 +54,10 @@ export default function ProgramDisplay(props) {
   const isCycleAtZero: boolean = currentCycleIndex === 0;
   const isCycleAtMax: boolean = currentCycleIndex === currentProgram.cycles.length - 1;
   const isSessionComplete: boolean = false; //import state from session component
+  const sessionIndicies: number[] = [];
+  for (let i = 0; i < 4; i ++) {
+    sessionIndicies.push(i);
+  }
 
   const handleRedirect = (path: string) => {
     history.push( {pathname: path} )
@@ -63,7 +67,7 @@ export default function ProgramDisplay(props) {
     <React.Fragment>
       <CssBaseline />
       <main>
-
+  
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
@@ -71,7 +75,7 @@ export default function ProgramDisplay(props) {
             </Typography>
           </Container>
         </div>
-
+  
         <Grid container direction="row" justify="center" alignItems="center">
           {
           isCycleAtZero? <IconButton> <ArrowLeft/> </IconButton>
@@ -83,7 +87,7 @@ export default function ProgramDisplay(props) {
           : <IconButton onClick={() => setCurrentCycleIndex(currentCycleIndex + 1)}><ArrowRight /></IconButton>
           }
         </Grid>
-
+  
         {lifts.map((lift: Lift) => (
           <Container className={classes.cardGrid} key={lift.name}>
             <Typography>{lift.name}</Typography>
@@ -99,7 +103,7 @@ export default function ProgramDisplay(props) {
                           <TableCell align="justify">Reps</TableCell>
                         </TableRow>
                       </TableHead>
-
+  
                         {session.sets.map((set: Set) => (
                           <TableBody>
                             <TableRow>
@@ -109,10 +113,9 @@ export default function ProgramDisplay(props) {
                           </TableBody>
                         ))}
                       
-                      
                     </Table>
                   </TableContainer>
-
+  
                   <Grid container direction="row">
                     <Button 
                       size="small"
@@ -129,13 +132,13 @@ export default function ProgramDisplay(props) {
                     }
                     
                   </Grid>
-
+  
                 </Grid>
               ))}
             </Grid>
           </Container>
         ))}
-
+  
       </main>
     </React.Fragment>
   );
