@@ -111,7 +111,7 @@ export default function SessionDisplay(props) {
             </Table>
           </TableContainer>
 
-          <ActiveSetDisplay currentLift={currentLift} currentSession={currentSession} currentCycle={currentCycle} currentProgram={currentProgram} />
+          <ActiveSetDisplay currentLift={currentLift} currentSession={currentSession} currentCycle={cycle} currentProgram={currentProgram} />
         </Container>
         
       </main>

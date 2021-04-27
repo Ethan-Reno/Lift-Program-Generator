@@ -82,3 +82,22 @@ export const createSet = (oneRepMax, setValues, programInputs) => {
   }
   return sets;
 }
+
+
+// amrap-data-slice utils
+
+export const storeAmrapData = (state, payload) => {
+  let newState = state;
+  if (newState.amrapData.liftName) {
+    newState.amrapData.liftName.forEach(() => {
+      if (newState.amrapData.liftName === payload.liftName) {
+        newState.amrapData.liftName.push(payload.liftName.amrapData)
+      } else {
+        newState.amrapData.push(payload.liftName)
+      }
+    })
+  } else {
+    newState.amrapData.push(payload)
+  }
+  return newState;
+}

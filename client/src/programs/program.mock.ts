@@ -24,7 +24,7 @@ export const mockProgram = {
   roundNumber: 0,
 }
 
-export const mockAmrapDataPoint = {
+export const mockAddamrapDataPoint = {
   liftName: '',
   timestamp: 0,
   weight: 0,
@@ -34,4 +34,19 @@ export const mockAmrapDataPoint = {
   programTitle: '',
   cycle: 0,
   session: 0,
+}
+
+export const mockAmrapDataPoint = {
+  liftName: [
+    {
+      timestamp: 0,
+      weight: 0,
+      reps: 0,
+      c1RM: 0,
+      programUuid: '',
+      programTitle: '',
+      cycle: 0,
+      session: 0,
+    }
+  ]
 }

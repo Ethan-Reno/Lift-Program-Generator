@@ -15,8 +15,8 @@ import {
   TextField,
   Typography, } from '@material-ui/core';
   import Countdown from 'react-countdown';
-import { AmrapData } from "../program.types";
-import { addData } from "../amrap-data.slice";
+//import { AmrapData } from "../program.types";
+import { storeData } from "../amrap-data.slice";
 import { useDispatch } from 'react-redux';
 
 export default function ActiveSetDisplay({currentLift, currentSession, currentCycle, currentProgram}) { //props = currentSession, 
@@ -85,18 +85,18 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const amrapData: AmrapData = {
-      liftName: currentLift.name,
+    const amrapData = {
+      lift: currentLift.name,
       timestamp: Date.now(),
       weight: setWeight,
       reps: amrapInput,
       c1RM: calculate1RM(setWeight, amrapInput),
       programUuid: currentProgram.uuid,
-      programTitle: currentProgram.name,
-      cycle: currentCycle,
+      programTitle: currentProgram.title,
+      cycle: setCurrentNumber(currentCycle),
       session: setCurrentNumber(currentSession.number),
-    }
-    dispatch(addData(amrapData));
+    };
+    dispatch(storeData(amrapData));
     handleRedirect(`/programs/:${currentProgram.uuid}`)
   }
 

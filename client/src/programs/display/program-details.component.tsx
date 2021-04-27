@@ -56,7 +56,7 @@ export default function ProgramDisplay(props) {
   const isSessionComplete: boolean = false; //import state from session component
 
   const handleRedirect = (path: string) => {
-    history.push( { pathname: path} )
+    history.push( {pathname: path} )
   }
 
   return (
@@ -122,7 +122,6 @@ export default function ProgramDisplay(props) {
                       Start session
                       {/* Eventually make this read a variable that changes based on state - done or not */}
                     </Button>
-                    <Typography>Completed?</Typography>
                     {isSessionComplete? 
                       <Done color="primary" />
                     : 

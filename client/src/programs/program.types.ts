@@ -1,3 +1,4 @@
+
 export interface LiftType {
   name: string;
   label: string;
@@ -77,3 +78,53 @@ export interface AmrapData {
   cycle: number,
   session: number,
 }
+
+export interface AmrapDataPoint {
+  timestamp: number,
+  weight: number,
+  reps: 0,
+  c1RM: 0,
+  programUuid: '',
+  programTitle: '',
+  cycle: 0,
+  session: 0,
+}
+
+export interface AmrapState {
+  [liftName: string]: {
+    data: AmrapDataPoint[]
+  }
+}
+
+// data: [
+//   0: {
+//     Squat: [
+//       {data},
+//       {data},
+//       {data},
+//     ]
+//   },
+//   1: {
+//     Deadlift: [
+//       {data},
+//       //etc
+//     ]
+//   },
+//   //etc
+// ]
+
+// data: [
+//   0: {
+//     Squat: [
+//       {data},
+//       {data},
+//       {data},
+//     ]
+//   },
+//   {
+//     Deadlift: [
+//       {data},
+//       //etc
+//     ]
+//   }
+// ]
