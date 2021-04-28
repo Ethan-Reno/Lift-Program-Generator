@@ -1,6 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
-import { AmrapState, AmrapDataPoint } from './program.types';
-import { original } from 'immer';
+import { createSlice } from '@reduxjs/toolkit';
 
 // const initialState: AmrapState = { lifts: {} }
 

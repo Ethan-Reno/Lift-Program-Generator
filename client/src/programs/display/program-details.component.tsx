@@ -37,7 +37,6 @@ export default function ProgramDisplay(props) {
   const history = useHistory();
   const programs = useSelector((state: any) => state.programs.programs) // any type for now, until I figure out how I want to type the redux state
 
-
   // set currentProgram to the program with a uuid matching the url uuid parameter
   let currentProgram;
   const id = props.match.params.id
@@ -94,7 +93,7 @@ export default function ProgramDisplay(props) {
             <Grid container spacing={2}>
               {lift.sessions.map((session: Session) => (
                 <Grid item lg={3}>
-                  <TableContainer component={Paper}>
+                  <TableContainer component={Paper} key={session.number}>
                     <Table aria-label="simple table">
                     
                       <TableHead>
@@ -115,23 +114,31 @@ export default function ProgramDisplay(props) {
                       
                     </Table>
                   </TableContainer>
-  
-                  <Grid container direction="row">
-                    <Button 
-                      size="small"
-                      variant="outlined"
-                      onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
-                    >
-                      Start session
-                      {/* Eventually make this read a variable that changes based on state - done or not */}
-                    </Button>
-                    {isSessionComplete? 
-                      <Done color="primary" />
+                  
+                  
+                    {session.complete? 
+                      <Grid container direction="row">
+                          <Button 
+                          size="small"
+                          variant="outlined"
+                          onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
+                        >
+                          Repeat session
+                        </Button>
+                        <Done color="primary" />
+                      </Grid>
                     : 
-                      <Clear color="secondary" />
+                      <Grid container direction="row">
+                        <Button 
+                          size="small"
+                          variant="outlined"
+                          onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
+                        >
+                          Start session
+                        </Button>
+                        <Clear color="secondary" />
+                      </Grid>
                     }
-                    
-                  </Grid>
   
                 </Grid>
               ))}

@@ -40,6 +40,7 @@ export interface Lift {
 
 export interface Session {
   number: number;
+  complete: boolean;
   sets: Set[];
 }
 
@@ -48,27 +49,8 @@ export interface Set {
   weight: number;
 }
 
-// interface AmprapData {
-//   lifts: { [liftName: string]: AmprapLift };
-// }
-
-// interface AmprapLift {
-//   data: AmrapLiftDataPoint[];  
-// }
-
-// interface AmrapLiftDataPoint {
-//   timestamp: Date;
-//   reps: number;
-//   weight: number;
-//   c1RM: number;
-//   programUuid: string;
-//   programTitle: string;
-//   cycle: number;
-//   session: number;
-// }
-
 export interface AmrapData {
-  liftName: string,
+  lift: string,
   timestamp: number,
   weight: number,
   reps: number,
@@ -78,53 +60,3 @@ export interface AmrapData {
   cycle: number,
   session: number,
 }
-
-export interface AmrapDataPoint {
-  timestamp: number,
-  weight: number,
-  reps: 0,
-  c1RM: 0,
-  programUuid: '',
-  programTitle: '',
-  cycle: 0,
-  session: 0,
-}
-
-export interface AmrapState {
-  [liftName: string]: {
-    data: AmrapDataPoint[]
-  }
-}
-
-// data: [
-//   0: {
-//     Squat: [
-//       {data},
-//       {data},
-//       {data},
-//     ]
-//   },
-//   1: {
-//     Deadlift: [
-//       {data},
-//       //etc
-//     ]
-//   },
-//   //etc
-// ]
-
-// data: [
-//   0: {
-//     Squat: [
-//       {data},
-//       {data},
-//       {data},
-//     ]
-//   },
-//   {
-//     Deadlift: [
-//       {data},
-//       //etc
-//     ]
-//   }
-// ]

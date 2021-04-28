@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 //import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { 
+  Box,
   Button,
   ButtonGroup,
   Table, 
@@ -15,7 +16,8 @@ import {
   TextField,
   Typography, } from '@material-ui/core';
   import Countdown from 'react-countdown';
-//import { AmrapData } from "../program.types";
+import { AmrapData } from "../program.types";
+import { markSessionComplete } from "../programs.slice";
 import { storeData } from "../amrap-data.slice";
 import { useDispatch } from 'react-redux';
 
@@ -63,7 +65,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
   }
 
   const handleRedirect = (path: string) => {
-    history.push( { pathname: path} )
+    history.push({pathname: path},  )
   }
 
   // Add 1 to display numbers to correct for 0 index
@@ -83,9 +85,16 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
     return Math.ceil(c1RM);
   }
 
+  const programDetails = {
+    uuid: currentProgram.uuid,
+    cycle: parseInt(currentCycle),
+    lift: currentLift.name,
+    session: currentSession.number
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const amrapData = {
+    const amrapData: AmrapData = {
       lift: currentLift.name,
       timestamp: Date.now(),
       weight: setWeight,
@@ -97,6 +106,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
       session: setCurrentNumber(currentSession.number),
     };
     dispatch(storeData(amrapData));
+    dispatch(markSessionComplete(programDetails));
     handleRedirect(`/programs/:${currentProgram.uuid}`)
   }
 
@@ -113,6 +123,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
       return <span>{minutes}:{seconds}</span>;
     }
   };
+
 
   if (sessionIsActive) {
     table = <React.Fragment>
@@ -137,6 +148,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
         </Table>
       </TableContainer>
     </React.Fragment>;
+
     if (betweenSets) {
       buttons = <ButtonGroup>
         <Button
@@ -147,13 +159,17 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
         >
           Begin next set
         </Button>
-        <Countdown date={Date.now() + 179000} renderer={renderer}/>
+        <Box
+        //  add css styles here
+        >
+          <Countdown date={Date.now() + 179000} renderer={renderer}/>
+        </Box>
+        
       </ButtonGroup>;
     } else if (activeSet === finalSet) {
       buttons = <form onSubmit={handleSubmit} noValidate>
         <ButtonGroup>
           <TextField
-            variant="outlined"
             required
             fullWidth
             onChange={e => setAmrapInput(parseInt(e.target.value))}
@@ -171,6 +187,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
           </Button>
         </ButtonGroup>
       </form>
+
     } else {
       buttons = <ButtonGroup>
         <Button
@@ -183,6 +200,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
         </Button>
       </ButtonGroup>
     }
+
   } else {
     buttons = <Grid container direction="row" justify="center" alignItems="center">
       <ButtonGroup>
