@@ -118,13 +118,14 @@ export default function ProgramDisplay(props) {
                   
                     {session.complete? 
                       <Grid container direction="row">
-                          <Button 
+                        <Button 
                           size="small"
                           variant="outlined"
                           onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
                         >
                           Repeat session
                         </Button>
+                        {/* TODO: Icon overlapping */}
                         <Done color="primary" />
                       </Grid>
                     : 

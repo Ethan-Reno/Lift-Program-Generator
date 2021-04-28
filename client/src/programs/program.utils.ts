@@ -70,7 +70,6 @@ export const createSession = (oneRepMax, programInputs) => {
 
 export const createSet = (oneRepMax, setValues, programInputs) => {
   let setCount = 6;
-
   let sets = [];
   for (let i=0; i < setCount; i ++) {
     sets = [

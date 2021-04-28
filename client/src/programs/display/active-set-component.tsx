@@ -160,7 +160,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
           Begin next set
         </Button>
         <Box
-        //  add css styles here
+        // TODO: add css styles here
         >
           <Countdown date={Date.now() + 179000} renderer={renderer}/>
         </Box>

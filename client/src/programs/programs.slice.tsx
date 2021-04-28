@@ -30,7 +30,9 @@ const programSlice = createSlice({
           console.log(program.lifts.length);
           for (let i = 0; i < program.lifts.length; i ++) {
             if (program.lifts[i].name === liftName) {
-              program.lifts[i].sessions[session].complete = true;
+              if (program.lifts[i].sessions[session].complete === false) {
+                program.lifts[i].sessions[session].complete = true;
+              }
             }
           }
         }
