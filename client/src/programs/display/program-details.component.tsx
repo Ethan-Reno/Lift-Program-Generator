@@ -120,7 +120,8 @@ export default function ProgramDisplay(props) {
                       <Grid container direction="row">
                         <Button 
                           size="small"
-                          variant="outlined"
+                          variant="contained"
+                          color="secondary"
                           onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
                         >
                           Repeat session
@@ -132,12 +133,12 @@ export default function ProgramDisplay(props) {
                       <Grid container direction="row">
                         <Button 
                           size="small"
-                          variant="outlined"
+                          variant="contained"
+                          color="primary"
                           onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
                         >
                           Start session
                         </Button>
-                        <Clear color="secondary" />
                       </Grid>
                     }
   
