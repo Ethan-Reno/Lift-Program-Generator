@@ -8,6 +8,7 @@ import Dashboard from './dashboard/dashboard.component';
 import CreateProgram from './programs/create/create-program.component';
 import ProgramDetails from './programs/display/program-details.component';
 import SessionDetails from './programs/display/session-details.component';
+import Graph from './programs/display/graphs-component';
 
 const App = () => (
     <Router>
@@ -18,6 +19,7 @@ const App = () => (
           <Route path="/signup" component={SignUp} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/create" component={CreateProgram} />
+          <Route path="/graph" component={Graph} />
           <Route path="/programs/:id/:cycle/:lift/:session" component={SessionDetails} />
           <Route path="/programs/:id" component={ProgramDetails} />
           <Route exact path="/" component={Landing} />

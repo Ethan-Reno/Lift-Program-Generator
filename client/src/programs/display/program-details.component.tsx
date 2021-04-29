@@ -55,7 +55,7 @@ export default function ProgramDisplay(props) {
 
   const isCycleAtZero: boolean = currentCycleIndex === 0;
   const isCycleAtMax: boolean = currentCycleIndex === currentProgram.cycles.length - 1;
-  const isSessionComplete: boolean = false; //import state from session component
+  
   const sessionIndicies: number[] = [];
   for (let i = 0; i < 4; i ++) {
     sessionIndicies.push(i);
@@ -80,6 +80,7 @@ export default function ProgramDisplay(props) {
                   Back
           </Button>
         </div>
+        
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
