@@ -16,7 +16,7 @@ import {
   CssBaseline, 
   Typography, 
   IconButton } from '@material-ui/core';
-import { ArrowRight, ArrowLeft, Done, Clear } from '@material-ui/icons';
+import { ArrowRight, ArrowLeft, Done } from '@material-ui/icons';
 import { Program, Lift, Session, Set } from "../program.types";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 100,
+  },
+  button: {
+    margin: theme.spacing(1, 0, 2),
   },
 }));
 
@@ -97,6 +100,7 @@ export default function ProgramDisplay(props) {
                     <Table aria-label="simple table">
                     
                       <TableHead>
+                        <Typography align="center">Session: {session.number + 1}</Typography>
                         <TableRow>
                           <TableCell align="justify">Weight (lbs)</TableCell>
                           <TableCell align="justify">Reps</TableCell>
@@ -120,8 +124,10 @@ export default function ProgramDisplay(props) {
                       <Grid container direction="row">
                         <Button 
                           size="small"
-                          variant="contained"
-                          color="secondary"
+                          variant="outlined"
+                          color="primary"
+                          fullWidth
+                          className={classes.button}
                           onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
                         >
                           Repeat session
@@ -135,6 +141,8 @@ export default function ProgramDisplay(props) {
                           size="small"
                           variant="contained"
                           color="primary"
+                          fullWidth
+                          className={classes.button}
                           onClick={() => {handleRedirect(`/programs/:${currentProgram.uuid}/:${currentCycleIndex}/:${lift.name}/:${session.number}`)}}
                         >
                           Start session

@@ -27,7 +27,6 @@ const programSlice = createSlice({
       for (let i = 0; i < state.programs.length; i ++) {
         if (state.programs[i].uuid === uuid) {
           program = state.programs[i].cycles[cycle];
-          console.log(program.lifts.length);
           for (let i = 0; i < program.lifts.length; i ++) {
             if (program.lifts[i].name === liftName) {
               if (program.lifts[i].sessions[session].complete === false) {

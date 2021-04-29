@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-//import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { 
   Box,
@@ -23,23 +23,13 @@ import { useDispatch } from 'react-redux';
 
 export default function ActiveSetDisplay({currentLift, currentSession, currentCycle, currentProgram}) { //props = currentSession, 
   
-  // const useStyles = makeStyles((theme) => ({
-  //   heroContent: {
-  //     padding: theme.spacing(4, 0, 0),
-  //   },
-  //   cardGrid: {
-  //     paddingTop: theme.spacing(4),
-  //     paddingBottom: theme.spacing(4),
-  //   },
-  //   table: {
-  //     minWidth: 100,
-  //   },
-  //   activeSet: {
-  //     paddingTop: theme.spacing(4),
-  //     paddingBottom: theme.spacing(4),
-  //   },
-  // }));
+  const useStyles = makeStyles((theme) => ({
+    button: {
+      margin: theme.spacing(1, 0, 2),
+    },
+  }));
 
+  const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -155,10 +145,12 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
           fullWidth
           variant="contained"
           color="primary"
+          className={classes.button}
           onClick={() => {handleBetweenSets()}}
         >
           Begin next set
         </Button>
+
         <Box
         // TODO: add css styles here
         >
@@ -172,6 +164,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
           <TextField
             required
             fullWidth
+            className={classes.button}
             onChange={e => setAmrapInput(parseInt(e.target.value))}
             label="amrap input"
             name="amrapInput"
@@ -179,6 +172,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
           />
           <Button
             fullWidth
+            className={classes.button}
             type="submit"
             variant="contained"
             color="primary"
@@ -192,6 +186,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
       buttons = <ButtonGroup>
         <Button
           fullWidth
+          className={classes.button}
           variant="contained"
           color="primary"
           onClick={() => {handleSetChange(activeSet); handleBetweenSets()}}
@@ -206,6 +201,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
       <ButtonGroup>
         <Button
           fullWidth
+          className={classes.button}
           variant="contained"
           color="primary"
           onClick={() => setSessionIsActive(!sessionIsActive)}

@@ -250,6 +250,7 @@ export default function CreateProgram() {
                 variant="outlined"
                 color="secondary"
                 className={classes.submit}
+                onClick={() => history.push({pathname: "/dashboard"})}
               >
                 Cancel
               </Button>
