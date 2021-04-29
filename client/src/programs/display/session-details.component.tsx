@@ -36,18 +36,16 @@ export default function SessionDisplay(props) {
   }));
   
   const classes = useStyles();
-
   const programs = useSelector((state: any) => state.programs.programs) // any type for now, until I figure out how I want to type the redux state
   
+  // Destructure and remove colons from params
   let {id, cycle, lift, session} = useParams();
-  
-  // Remove colons from params
   id = id.substring(1);
   cycle = cycle.substring(1);
   lift = lift.substring(1);
   session = session.substring(1);
 
-  // Set all session values as session selected from the program view   --  import this as a util?
+  // Set all session values as session selected from the program view   -- TODO: import this as a util?
   let currentProgram: Program;
   programs.forEach((program: Program) => {
     if (program.uuid === id) {

@@ -70,6 +70,16 @@ export default function ProgramDisplay(props) {
       <CssBaseline />
       <main>
   
+        <div>
+          <Button
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.button}
+                  onClick={() => history.push({pathname: "/dashboard"})}
+                >
+                  Back
+          </Button>
+        </div>
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
