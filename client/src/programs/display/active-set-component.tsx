@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { format } from 'date-fns';
 import { 
   Box,
   Button,
@@ -93,7 +92,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
     e.preventDefault();
     const amrapData: AmrapData = {
       lift: currentLift.name,
-      timestamp: Date.now(),
+      timestamp: new Date(),
       weight: setWeight,
       reps: amrapInput,
       c1RM: calculate1RM(setWeight, amrapInput),

@@ -14,6 +14,7 @@ import {
   Container } from '@material-ui/core';
 import { Program } from '../programs/program.types';
 import { deleteProgram } from '../programs/programs.slice';
+import Graph from "../programs/display/graph.component";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -116,6 +117,7 @@ export default function Dashboard() {
           </Button>
         </Container>
 
+        <Graph />
       </main>
     </React.Fragment>
   );
