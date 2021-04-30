@@ -12,6 +12,7 @@ import {
   Legend,
 } from "recharts";
 import { parseISO, format, fromUnixTime } from 'date-fns';
+import dayjs from 'dayjs';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -39,7 +40,6 @@ export default function Graph() {
 
   const classes = useStyles();
   const amrapData = useSelector((state: any) => state.amrapData.lifts)
-  console.log(amrapData[0]);
 
   const getDataArray = (lift: any) => {
     let liftData = [];
@@ -55,15 +55,14 @@ export default function Graph() {
     return liftData;
   };
 
-  function getRandomColor() {
-    let letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-  // TODO: hardcode a decent sized array (to account for custom lifts) for first many colors - for consistency and aesthetic. perhaps random after many?
+  let colors = [
+    "#77AD78", //forest green crayola
+    "#FFBD00", //mango
+    "#6874E8", //neon blue
+    "#F85E00", //orange
+    "#FF3333", //tart orange
+  ]
+
 
   return (
     <Container>
@@ -84,9 +83,12 @@ export default function Graph() {
             dataKey="date" 
             axisLine={false} 
             tickLine={false}
-            tickFormatter={(str) => {
-              const date = parseISO(str);
-              return format(date, "yy-MMM-d");
+            type="number"
+            label={{value: "Time", position: "insideBottom"}}
+            domain={['dataMin - 100', 'dataMax + 100']}
+            tickFormatter={(num) => {
+              const date = dayjs(num)
+              return dayjs(date).format('DD-MMM HH:mm:ss');
               //h:m:s aaa
               }
             }
@@ -97,6 +99,7 @@ export default function Graph() {
             axisLine={false} 
             tickLine={false} 
             tickCount={8}
+            label={{value: "Weight (lb)", angle: -90, position: "insideLeft"}}
             // tickFormatter={(number) => `${number.toFixed(2)}`}
             // TODO: round numbers to something nice
           />
@@ -109,12 +112,13 @@ export default function Graph() {
             type="monotone"
             data={getDataArray(amrapData[index])} 
             dataKey="c1RM" 
-            stroke={getRandomColor()}
+            stroke={colors[index]} //TODO: add color array
           />
+          // TODO: future, add delete action to remove a data point from amrap slice
         })}
 
           <Tooltip 
-            // content={<CustomTooltip />}
+            content={<CustomTooltip />}
           /> 
 
           <CartesianGrid opacity={0.1} vertical={false} />
@@ -125,15 +129,14 @@ export default function Graph() {
   );
 }
 
-// function CustomTooltip({ active, payload, label }: any) {
-//   if (active) {
-//     return (
-//       <div className="tooltip">
-//         <h4>{format(parseISO(label), "eeee, d MMM, yyyy")}</h4>
-//         <p>${payload[0].value.toFixed(2)} CAD</p>
-//         <p>${payload[1].value.toFixed(2)} USD</p>
-//       </div>
-//     );
-//   }
-//   return null;
-// }
+function CustomTooltip({ active, payload, label }: any) {
+  if (active) {
+    return (
+      <div>
+        <h4>{dayjs(label).format('DD-MMM HH:mm:ss')}</h4>
+        <p>{payload[0].value} lbs</p>
+      </div>
+    );
+  }
+  return null;
+}

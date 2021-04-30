@@ -92,7 +92,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
     e.preventDefault();
     const amrapData: AmrapData = {
       lift: currentLift.name,
-      timestamp: new Date(),
+      timestamp: Date.now(),
       weight: setWeight,
       reps: amrapInput,
       c1RM: calculate1RM(setWeight, amrapInput),
