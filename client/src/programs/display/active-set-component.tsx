@@ -76,11 +76,11 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
     return Math.ceil(c1RM);
   }
 
-  const createDate = () => {
-    let today = new Date();
-    const formattedDate = format(today, 'dd.MM.yyyy');
-    return formattedDate;
-  }
+  // const createDate = () => {
+  //   let today = new Date();
+  //   const formattedDate = format(today, 'dd.MM.yyyy');
+  //   return formattedDate;
+  // }
 
   const programDetails = {
     uuid: currentProgram.uuid,
@@ -93,7 +93,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
     e.preventDefault();
     const amrapData: AmrapData = {
       lift: currentLift.name,
-      timestamp: createDate(),
+      timestamp: Date.now(),
       weight: setWeight,
       reps: amrapInput,
       c1RM: calculate1RM(setWeight, amrapInput),

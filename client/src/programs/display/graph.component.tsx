@@ -22,26 +22,52 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/* 
+lifts = [
+  {
+    lift: "liftName",
+    data: [
+      {
+        c1RM: number,
+        timestamp: string,
+      }
+    ]
+  },
+  {},
+  {},
+]
+
+*/
 export default function Graph() {
 
   const classes = useStyles();
   const history = useHistory();
   const amrapData = useSelector((state: any) => state.amrapData.lifts)
-  let data = amrapData;
 
-  const lifts = amrapData.map(data => data.lift);
-  const liftsSet = new Set(lifts);
-  const uniqueLifts = [...liftsSet];
+  const getDataArrayOfObjects = (lift: any) => {
+    let liftData = [];
+    lift.data.forEach((dataPoint) => {
+      liftData = [
+        ...liftData,
+        {
+          c1RM: dataPoint.c1RM,
+          date: dataPoint.timestamp,
+        },
+      ];
+    })
+    return liftData;
+  };
 
-  console.log(uniqueLifts);
+  function getRandomColor() {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
-  // for (let num = 30; num >= 0; num --) {
-  //   data.push({
-  //     date: subDays(new Date(), num).toISOString().substr(0, 10),
-  //     value: 1 + Math.random(),
-  //     value2: 1 - Math.random(),
-  //   });
-  // }
+  // TODO: hardcode a decent sized array (to account for custom lifts) for first many colors - for consistency and aesthetic. perhaps random after many?
 
   return (
     <Container>
@@ -61,7 +87,7 @@ export default function Graph() {
       <div className={classes.heroContent}>
         <Container maxWidth="sm">
           <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
-            Calculated One-Rep-Max History
+            Calculated 1RM History
           </Typography>
         </Container>
       </div>
@@ -69,22 +95,13 @@ export default function Graph() {
       <ResponsiveContainer width="100%" height={400}>
         <LineChart>
 
-          <Line 
-            data={data} 
-            stroke="#2451B7"
-            // fill="url(#color)"
-          />
-
-          {/* <Area 
-            dataKey="value2"
-            stroke="ad31B7"
-          /> */}
-
-          <XAxis 
-            dataKey="timestamp" 
+        <XAxis 
+            dataKey="date" 
             axisLine={false} 
             tickLine={false}
-            tickCount={5}
+            tickCount={2}
+            type="number" 
+            domain={['dataMin - 100', 'dataMax + 100']}
             // tickFormatter={string => {
             //   const date = parseISO(string);
             //   // is it a 7, 14, 21 date?
@@ -104,6 +121,14 @@ export default function Graph() {
             tickCount={8}
             // tickFormatter={(number) => `${number.toFixed(2)}`}
           />
+
+        {amrapData.map((value, index) => {
+          return <Line 
+            data={getDataArrayOfObjects(amrapData[index])} 
+            dataKey="c1RM" 
+            stroke={getRandomColor()}
+          />
+        })}
 
           <Tooltip 
             // content={<CustomTooltip />}
