@@ -5,14 +5,13 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import {
   ResponsiveContainer,
-  AreaChart,
+  LineChart,
   XAxis,
   YAxis,
-  Area,
+  Line,
   Tooltip,
   CartesianGrid,
 } from "recharts";
-import { format, parseISO, subDays } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -28,15 +27,13 @@ export default function Graph() {
   const classes = useStyles();
   const history = useHistory();
   const amrapData = useSelector((state: any) => state.amrapData.lifts)
+  let data = amrapData;
 
-  console.log(amrapData);
-  
-  const data = amrapData;
+  const lifts = amrapData.map(data => data.lift);
+  const liftsSet = new Set(lifts);
+  const uniqueLifts = [...liftsSet];
 
-/*
-Psuedo for populating data array
-
-*/
+  console.log(uniqueLifts);
 
   // for (let num = 30; num >= 0; num --) {
   //   data.push({
@@ -70,16 +67,10 @@ Psuedo for populating data array
       </div>
       
       <ResponsiveContainer width="100%" height={400}>
-        <AreaChart data={data}>
-          {/* <defs>
-            <LinearGradient id="color" x1="0" y1="0" x2="0" y2="0">
-              <stop offset="0%" stopColor="#2451B7" stopOpacity={0.4} />
-              <stop offset="0%" stopColor="#2451B7" stopOpacity={0.1} />
-            </LinearGradient>
-          </defs> */}
+        <LineChart>
 
-          <Area 
-            dataKey="c1RM" 
+          <Line 
+            data={data} 
             stroke="#2451B7"
             // fill="url(#color)"
           />
@@ -120,21 +111,21 @@ Psuedo for populating data array
 
           <CartesianGrid opacity={0.1} vertical={false} />
 
-        </AreaChart>
+        </LineChart>
       </ResponsiveContainer>
     </Container>
   );
 }
 
-function CustomTooltip({ active, payload, label }: any) {
-  if (active) {
-    return (
-      <div className="tooltip">
-        <h4>{format(parseISO(label), "eeee, d MMM, yyyy")}</h4>
-        <p>${payload[0].value.toFixed(2)} CAD</p>
-        <p>${payload[1].value.toFixed(2)} USD</p>
-      </div>
-    );
-  }
-  return null;
-}
+// function CustomTooltip({ active, payload, label }: any) {
+//   if (active) {
+//     return (
+//       <div className="tooltip">
+//         <h4>{format(parseISO(label), "eeee, d MMM, yyyy")}</h4>
+//         <p>${payload[0].value.toFixed(2)} CAD</p>
+//         <p>${payload[1].value.toFixed(2)} USD</p>
+//       </div>
+//     );
+//   }
+//   return null;
+// }

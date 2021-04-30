@@ -8,7 +8,7 @@ import Dashboard from './dashboard/dashboard.component';
 import CreateProgram from './programs/create/create-program.component';
 import ProgramDetails from './programs/display/program-details.component';
 import SessionDetails from './programs/display/session-details.component';
-import Graph from './programs/display/graphs-component';
+import Graph from './programs/display/graph.component';
 
 const App = () => (
     <Router>

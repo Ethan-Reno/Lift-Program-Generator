@@ -9,7 +9,13 @@ const amrapDataSlice = createSlice({
   },
   reducers: {
     storeData: ( state, action ) => {
-      state.lifts.push(action.payload);
+      //state.lifts.push(action.payload);
+      let lift = state.lifts.find(l => l.lift === action.payload.lift);
+      if (!lift) {
+        lift = { lift: action.payload.lift, data: [] };
+        state.lifts.push(lift);
+      }
+      lift.data.push(action.payload);
     }
   }
 })

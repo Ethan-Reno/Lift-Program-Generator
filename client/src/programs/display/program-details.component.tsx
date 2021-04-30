@@ -106,7 +106,21 @@ export default function ProgramDisplay(props) {
             <Typography>{lift.name}</Typography>
             <Grid container spacing={2}>
               {lift.sessions.map((session: Session) => (
-                <Grid item lg={3}>
+                <Grid item lg={3}> 
+                {/* ^ position relative from class
+                direct child of ^  
+                classes.overlappingIconContainer = {
+                  position: "absolute"
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                }
+                <div 
+                  className={classes.overlappingIconContainer}>
+                  
+                </div>
+                */}
                   <TableContainer component={Paper} key={session.number}>
                     <Table aria-label="simple table">
                     
@@ -143,7 +157,10 @@ export default function ProgramDisplay(props) {
                         >
                           Repeat session
                         </Button>
-                        {/* TODO: Icon overlapping */}
+                        {/* TODO: Icon overlapping - ABSOLUTE POSITIONING
+                        positive relative to element in my screenshot
+                        checkbox into a container that is IN the element
+                        */}
                         <Done color="primary" />
                       </Grid>
                     : 

@@ -180,7 +180,7 @@ export default function CreateProgram() {
                   label="Round lift values to the nearest..."
                   name="weightIncrement"
                   type="number"
-                  InputProps={{ inputProps: { min: 0 }} }
+                  InputProps={ { inputProps: { min: 0 }} }
                 />
             </Grid>
 

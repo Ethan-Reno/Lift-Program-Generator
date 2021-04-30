@@ -51,7 +51,7 @@ export interface Set {
 
 export interface AmrapData {
   lift: string,
-  timestamp: number,
+  timestamp: string,
   weight: number,
   reps: number,
   c1RM: number,
@@ -59,4 +59,11 @@ export interface AmrapData {
   programTitle: string,
   cycle: number,
   session: number,
+}
+
+
+interface AmrapState {
+  [liftName: string]: {
+    data: AmrapData[]
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import { format } from 'date-fns';
 import { 
   Box,
   Button,
@@ -75,6 +76,12 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
     return Math.ceil(c1RM);
   }
 
+  const createDate = () => {
+    let today = new Date();
+    const formattedDate = format(today, 'dd.MM.yyyy');
+    return formattedDate;
+  }
+
   const programDetails = {
     uuid: currentProgram.uuid,
     cycle: parseInt(currentCycle),
@@ -86,7 +93,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
     e.preventDefault();
     const amrapData: AmrapData = {
       lift: currentLift.name,
-      timestamp: Date.now(),
+      timestamp: createDate(),
       weight: setWeight,
       reps: amrapInput,
       c1RM: calculate1RM(setWeight, amrapInput),
