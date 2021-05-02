@@ -11,7 +11,6 @@ import {
   CartesianGrid,
   Legend,
 } from "recharts";
-import { parseISO, format, fromUnixTime } from 'date-fns';
 import dayjs from 'dayjs';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,22 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-/* 
-lifts = [
-  {
-    lift: "liftName",
-    data: [
-      {
-        c1RM: number,
-        timestamp: string,
-      }
-    ]
-  },
-  {},
-  {},
-]
-
-*/
 export default function Graph() {
 
   const classes = useStyles();
@@ -83,12 +66,15 @@ export default function Graph() {
             dataKey="date" 
             axisLine={false} 
             tickLine={false}
+            tick={{ fill: 'white', fontSize: 12 }}
+            interval={0}
             type="number"
-            label={{value: "Time", position: "insideBottom"}}
-            domain={['dataMin - 100', 'dataMax + 100']}
+            padding={{right: 30}}
+            angle={-35}
+            domain={['auto', 'auto']}
             tickFormatter={(num) => {
               const date = dayjs(num)
-              return dayjs(date).format('DD-MMM HH:mm:ss');
+              return dayjs(date).format('DD-MMM');
               //h:m:s aaa
               }
             }
@@ -99,12 +85,13 @@ export default function Graph() {
             axisLine={false} 
             tickLine={false} 
             tickCount={8}
-            label={{value: "Weight (lb)", angle: -90, position: "insideLeft"}}
+            tick={{ fill: 'white', fontSize: 12 }}
+            label={{value: "Weight (lb)", fill: 'white', angle: -90, position: "insideLeft"}}
             // tickFormatter={(number) => `${number.toFixed(2)}`}
             // TODO: round numbers to something nice
           />
 
-          <Legend />
+          <Legend verticalAlign="top" height={36}/>
 
         {amrapData.map((value, index) => {
           return <Line 
@@ -121,7 +108,7 @@ export default function Graph() {
             content={<CustomTooltip />}
           /> 
 
-          <CartesianGrid opacity={0.1} vertical={false} />
+          <CartesianGrid opacity={0.2} vertical={false} />
 
         </LineChart>
       </ResponsiveContainer>

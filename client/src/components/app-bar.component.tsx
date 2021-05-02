@@ -32,8 +32,8 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Lift App
           </Typography>
-          <Button color="inherit">Button One</Button>
-          <Button color="inherit">Button Two</Button>
+          <Button color="inherit">Dashboard</Button>
+          <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
