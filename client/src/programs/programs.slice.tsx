@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createProgram } from './program.utils'
 
-// { contacts: { programs: [...] } }
-// state itself will be a programs array
-
 const programSlice = createSlice({
   name: "programs",
   initialState: {
@@ -40,9 +37,6 @@ const programSlice = createSlice({
   },
 })
 
-// Type EVERYTHING actions, state, 
-
-// Action creates are generated for each case reducer function
 export const { addProgram, deleteProgram, markSessionComplete } = programSlice.actions;
 
 export default programSlice.reducer;
