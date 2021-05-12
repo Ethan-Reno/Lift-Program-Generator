@@ -54,6 +54,10 @@ export default function Dashboard() {
   const programs = useSelector((state: any) => state.programs.programs)
   const dispatch = useDispatch();
 
+  function handleRedirect1(path: string) {
+    history.push( { pathname: path} )
+  }
+
   const handleRedirect = (path: string) => {
     history.push( { pathname: path} )
   }

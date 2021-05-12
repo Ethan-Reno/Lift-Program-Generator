@@ -105,7 +105,7 @@ export default function Graph() {
         })}
 
           <Tooltip 
-            content={<CustomTooltip />}
+            // content={<CustomTooltip />}
           /> 
 
           <CartesianGrid opacity={0.2} vertical={false} />
@@ -116,14 +116,15 @@ export default function Graph() {
   );
 }
 
-function CustomTooltip({ active, payload, label }: any) {
-  if (active) {
-    return (
-      <div>
-        <h4>{dayjs(label).format('DD-MMM HH:mm:ss')}</h4>
-        <p>{payload[0].value} lbs</p>
-      </div>
-    );
-  }
-  return null;
-}
+// TODO: fix custom tooltip payload error
+// function CustomTooltip({ active, payload, label }: any) {
+//   if (active) {
+//     return (
+//       <div>
+//         <h4>{dayjs(label).format('DD-MMM HH:mm:ss')}</h4>
+//         <p>{payload[0].value} lbs</p>
+//       </div>
+//     );
+//   }
+//   return null;
+// }
