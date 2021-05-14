@@ -14,7 +14,7 @@ import {
   CssBaseline, 
   Typography, } from '@material-ui/core';
 import { Program, Cycle, Lift, Set } from "../program.types";
-import ActiveSetDisplay from "./active-set-component";
+import ActiveSetDisplay from "./active-set.component";
 
 export default function SessionDisplay(props) {
   
