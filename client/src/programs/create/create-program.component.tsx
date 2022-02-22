@@ -17,7 +17,7 @@ import { LiftType, LiftsFormState, ProgramInputs } from "../program.types";
 import { lifts } from '../program.lifts';
 import { addProgram } from '../programs.slice';
 import { useDispatch } from 'react-redux';
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
@@ -74,7 +74,7 @@ const initLiftsFormState = (lifts: LiftType[]): LiftsFormState  => {
 
 export default function CreateProgram() {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [cycles, setCycles] = useState(0);
   const [roundNumber, setRoundNumber] = useState(0);
@@ -136,7 +136,7 @@ export default function CreateProgram() {
         const data = await res.json()
       } */
     dispatch(addProgram(programInputs));
-    history.push({pathname: "/dashboard"});
+    navigate({pathname: "/dashboard"});
   }
 
   return (
@@ -250,7 +250,7 @@ export default function CreateProgram() {
                 variant="outlined"
                 color="secondary"
                 className={classes.submit}
-                onClick={() => history.push({pathname: "/dashboard"})}
+                onClick={() => navigate({pathname: "/dashboard"})}
               >
                 Cancel
               </Button>

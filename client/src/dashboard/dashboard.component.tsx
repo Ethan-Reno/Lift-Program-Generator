@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { 
   Button, 
   ButtonGroup, 
@@ -50,16 +50,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const programs = useSelector((state: any) => state.programs.programs)
   const dispatch = useDispatch();
 
   function handleRedirect1(path: string) {
-    history.push( { pathname: path} )
+    navigate( { pathname: path} )
   }
 
   const handleRedirect = (path: string) => {
-    history.push( { pathname: path} )
+    navigate( { pathname: path} )
   }
 
   const handleDelete = (program) => {

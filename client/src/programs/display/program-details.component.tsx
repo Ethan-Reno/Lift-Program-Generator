@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -37,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProgramDisplay(props) {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const { id } = useParams();
   const programs = useSelector((state: any) => state.programs.programs) // any type for now, until I figure out how I want to type the redux state
 
   // set currentProgram to the program with a uuid matching the url uuid parameter
   let currentProgram;
-  const id = props.match.params.id
   programs.forEach((program: Program) => {
     if (":" + program.uuid === id) {
       currentProgram = program;
@@ -62,7 +62,7 @@ export default function ProgramDisplay(props) {
   }
 
   const handleRedirect = (path: string) => {
-    history.push( {pathname: path} )
+    navigate( {pathname: path} )
   }
 
   return (
@@ -75,7 +75,7 @@ export default function ProgramDisplay(props) {
                   variant="outlined"
                   color="secondary"
                   className={classes.button}
-                  onClick={() => history.push({pathname: "/dashboard"})}
+                  onClick={() => navigate({pathname: "/dashboard"})}
                 >
                   Back
           </Button>

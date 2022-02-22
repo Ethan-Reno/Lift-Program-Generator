@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { 
   Box,
   Button,
@@ -30,7 +30,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
   }));
 
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [activeSet, setActiveSet] = useState(0);
@@ -55,7 +55,7 @@ export default function ActiveSetDisplay({currentLift, currentSession, currentCy
   }
 
   const handleRedirect = (path: string) => {
-    history.push({pathname: path},  )
+    navigate({pathname: path},  )
   }
 
   // Add 1 to display numbers to correct for 0 index

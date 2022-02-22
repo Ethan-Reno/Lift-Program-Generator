@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ApplicationBar from './components/app-bar.component';
 import Landing from './components/landing.component';
@@ -15,14 +14,14 @@ const App = () => (
       <div>
         <ApplicationBar />
         <Routes>
-          <Route path="/signin" element={SignIn} />
-          <Route path="/signup" element={SignUp} />
-          <Route path="/dashboard" element={Dashboard} />
-          <Route path="/amrapdata" element={AmrapData} />
-          <Route path="/create" element={CreateProgram} />
-          <Route path="/programs/:id/:cycle/:lift/:session" element={SessionDetails} />
-          <Route path="/programs/:id" element={ProgramDetails} />
-          <Route path="/" element={Landing} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/amrapdata" element={<AmrapData />} />
+          <Route path="/create" element={<CreateProgram />} />
+          <Route path="/programs/:id/:cycle/:lift/:session" element={<SessionDetails />} />
+          <Route path="/programs/:id" element={<ProgramDetails />} />
+          <Route path="/" element={<Landing />} />
         </Routes>
       </div>
     </Router>
