@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ApplicationBar from './components/app-bar.component';
 import Landing from './components/landing.component';
 import SignIn from './auth/sign-in.component';
@@ -14,16 +14,16 @@ const App = () => (
     <Router>
       <div>
         <ApplicationBar />
-        <Switch>
-          <Route path="/signin" component={SignIn} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/amrapdata" component={AmrapData} />
-          <Route path="/create" component={CreateProgram} />
-          <Route path="/programs/:id/:cycle/:lift/:session" component={SessionDetails} />
-          <Route path="/programs/:id" component={ProgramDetails} />
-          <Route exact path="/" component={Landing} />
-        </Switch>
+        <Routes>
+          <Route path="/signin" element={SignIn} />
+          <Route path="/signup" element={SignUp} />
+          <Route path="/dashboard" element={Dashboard} />
+          <Route path="/amrapdata" element={AmrapData} />
+          <Route path="/create" element={CreateProgram} />
+          <Route path="/programs/:id/:cycle/:lift/:session" element={SessionDetails} />
+          <Route path="/programs/:id" element={ProgramDetails} />
+          <Route path="/" element={Landing} />
+        </Routes>
       </div>
     </Router>
 )
